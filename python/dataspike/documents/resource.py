@@ -3,7 +3,7 @@ from typing import Optional
 from aiohttp import ClientResponse
 from pydantic import validate_arguments
 from uuid import UUID
-from model import DocumentSide, DocumentType
+from .model import DocumentSide, DocumentType
 from ..resource import Resource
 
 

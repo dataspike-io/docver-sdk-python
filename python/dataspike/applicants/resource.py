@@ -6,7 +6,7 @@ from aiohttp import ClientResponse
 from pydantic import validate_arguments
 from ..resource import Resource
 from ..common import PagedResponse
-from model import Applicant, ApplicantInfo
+from .model import Applicant, ApplicantInfo
 from uuid import UUID
 
 

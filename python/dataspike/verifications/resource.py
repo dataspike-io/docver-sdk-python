@@ -4,7 +4,7 @@ from uuid import UUID
 from aiohttp import ClientResponse
 from pydantic import validate_arguments
 
-from model import Verification
+from .model import Verification
 from ..documents.model import DocumentType
 from ..resource import Resource
 
@@ -38,7 +38,6 @@ class Verifications(Resource):
         response = await self._create(checks_required, applicant_id)
         await self._validate_resp(response, [201], "create verification")
         data = await response.json()
-        self._uuid_ids(data, "id", "applicant_id")
 
         return Verification(**data)
 
@@ -51,7 +50,6 @@ class Verifications(Resource):
 
         await self._validate_resp(response, [200], "get verification")
         data = await response.json()
-        self._uuid_ids(data, "id", "applicant_id")
         return Verification(**data)
 
     @validate_arguments
@@ -62,5 +60,4 @@ class Verifications(Resource):
         if response.status == 404:
             return None
         data = await response.json()
-        self._uuid_ids(data, "id", "applicant_id")
         return Verification(**data)

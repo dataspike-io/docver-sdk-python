@@ -8,7 +8,10 @@ from .verifications.resource import Verifications
 try:
     import pkg_resources
 
-    CURRENT_VERSION = pkg_resources.get_distribution("dataspike-python").version
+    try:
+        CURRENT_VERSION = pkg_resources.get_distribution("dataspike-python").version
+    except pkg_resources.DistributionNotFound:
+        CURRENT_VERSION = "dev"
 except ImportError:
     CURRENT_VERSION = "dev"
 
