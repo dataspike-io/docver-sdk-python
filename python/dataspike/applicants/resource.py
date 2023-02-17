@@ -2,7 +2,7 @@ import dataclasses
 
 from typing import Optional
 
-from requests import Response
+from aiohttp import ClientResponse
 from pydantic import validate_arguments
 from ..resource import Resource
 from ..common import PagedResponse
@@ -11,79 +11,56 @@ from uuid import UUID
 
 
 class Applicants(Resource):
-    def _get(self, applicant_id: UUID) -> Response:
-        return self._session.get(
-            url=f"{self._api_endpoint}/api/v3/applicants/{applicant_id}",
-            timeout=self._timeout,
-        )
+    async def _get(self, applicant_id: UUID) -> ClientResponse:
+        return await self._session.get(url=f"{self._api_endpoint}/api/v3/applicants/{applicant_id}")
 
     @validate_arguments
-    def get(self, applicant_id: UUID) -> Applicant:
-        response = self._get(applicant_id)
-        assert (
-            response.status_code == 200
-        ), f"get applicant failed, expected 200 got {response.status_code}, body: {response.text}"
-        data = response.json()
+    async def get(self, applicant_id: UUID) -> Applicant:
+        response = await self._get(applicant_id)
+        await self._validate_resp(response, [200], "get applicant")
+        data = await response.json()
         return Applicant(**data)
 
     @validate_arguments
-    def find(self, applicant_id: UUID) -> Optional[Applicant]:
-        response = self._get(applicant_id)
-        if response.status_code == 404:
+    async def find(self, applicant_id: UUID) -> Optional[Applicant]:
+        response = await self._get(applicant_id)
+        if response.status == 404:
             return None
-        assert (
-            response.status_code == 200
-        ), f"get applicant failed, expected 200 got {response.status_code}, body: {response.text}"
-        data = response.json()
+        await self._validate_resp(response, [200], "get applicant")
+        data = await response.json()
         return Applicant(**data)
 
-    def _create(self, external_id: Optional[str] = None, info: Optional[ApplicantInfo] = None) -> Response:
+    async def _create(self, external_id: Optional[str] = None, info: Optional[ApplicantInfo] = None) -> ClientResponse:
         body = {}
         if external_id is not None:
             body["external_id"] = external_id
         if info is not None:
             body["info"] = dataclasses.asdict(info)
-        return self._session.post(
-            url=f"{self._api_endpoint}/api/v3/applicants",
-            json=body,
-            timeout=self._timeout,
-        )
+        return await self._session.post(url=f"{self._api_endpoint}/api/v3/applicants", json=body)
 
     @validate_arguments
-    def create(self, external_id: Optional[str] = None, info: Optional[ApplicantInfo] = None) -> UUID:
-        response = self._create(external_id, info)
+    async def create(self, external_id: Optional[str] = None, info: Optional[ApplicantInfo] = None) -> UUID:
+        response = await self._create(external_id, info)
 
-        assert (
-            response.status_code == 201
-        ), f"create applicant failed, expected 201 got {response.status_code}, body: {response.text}"
+        await self._validate_resp(response, [201], "create applicant")
 
-        data = response.json()
+        data = await response.json()
         return UUID(data["id"])
 
-    def _list(self, page: int = 0, limit: int = 10) -> Response:
-        return self._session.get(
-            url=f"{self._api_endpoint}/api/v3/applicants?page={page}&?limit={limit}",
-            timeout=self._timeout,
-        )
+    async def _list(self, page: int = 0, limit: int = 10) -> ClientResponse:
+        return await self._session.get(url=f"{self._api_endpoint}/api/v3/applicants?page={page}&?limit={limit}")
 
     @validate_arguments
-    def list(self, page: int = 0, limit: int = 10) -> PagedResponse[Applicant]:
-        response = self._list(page, limit)
-        assert (
-            response.status_code == 200
-        ), f"list applicants failed, expected 200 got {response.status_code}, response {response.text}"
-        data = response.json()
+    async def list(self, page: int = 0, limit: int = 10) -> PagedResponse[Applicant]:
+        response = await self._list(page, limit)
+        await self._validate_resp(response, [200], "list applicants")
+        data = await response.json()
         return PagedResponse[Applicant](**data)
 
-    def _delete(self, applicant_id: UUID) -> Response:
-        return self._session.delete(
-            url=f"{self._api_endpoint}/api/v3/applicants/{applicant_id}",
-            timeout=self._timeout,
-        )
+    async def _delete(self, applicant_id: UUID) -> ClientResponse:
+        return await self._session.delete(url=f"{self._api_endpoint}/api/v3/applicants/{applicant_id}")
 
     @validate_arguments
-    def delete(self, applicant_id: UUID) -> None:
-        response = self._delete(applicant_id)
-        assert (
-            response.status_code == 200
-        ), f"delete applicant failed, expected 200 got {response.status_code}, response {response.text}"
+    async def delete(self, applicant_id: UUID) -> None:
+        response = await self._delete(applicant_id)
+        await self._validate_resp(response, [200], "delete applicant")

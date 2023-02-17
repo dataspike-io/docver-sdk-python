@@ -1,15 +1,15 @@
-from typing import Any, Optional, Iterable
+from typing import Any, Iterable
 from uuid import UUID
-from requests import Session, Response
 
-_TIMEOUT_TPE = float | tuple[float, float] | tuple[float, None]
+from aiohttp import ClientResponse, ClientSession
+
+from .errors import UnexpectedResponseStatus
 
 
 class Resource:
-    def __init__(self, session: Session, api_endpoint: str, timeout: Optional[_TIMEOUT_TPE]):
+    def __init__(self, session: ClientSession, api_endpoint: str):
         self._api_endpoint = api_endpoint
         self._session = session
-        self._timeout = timeout
 
     @staticmethod
     def _uuid_ids(data: dict[str, Any], *keys: str):
@@ -18,8 +18,13 @@ class Resource:
         return data
 
     @classmethod
-    def _assert_resp(cls, response: Response, statuses: Iterable[int], method: str):
-        s = map(lambda i: str(i), statuses)
-        assert (
-            response.status_code in statuses
-        ), f"{method} failed, expected {', '.join(s)} got {response.status_code}, response {response.text}"
+    async def _validate_resp(cls, response: ClientResponse, statuses: Iterable[int], method: str) -> None:
+        if response.status not in statuses:
+            s = map(lambda i: str(i), statuses)
+            response_text = await response.text()
+            raise UnexpectedResponseStatus(
+                method,
+                response.status,
+                response_text,
+                f"{method} failed, expected {', '.join(s)} " f"got {response.status}, response {response_text}",
+            )
