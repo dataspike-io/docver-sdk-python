@@ -1,4 +1,14 @@
 [tool.pdm]
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest==7.2.1",
+    "types-requests>=2.28.11.13",
+    "requests-mock>=1.10.0",
+    "black>=23.1.0",
+    "pytest-black>=0.3.12",
+    "flake8>=5.0.4",
+    "pyright>=1.1.294",
+]
 
 [project]
 name = "dataspike"
@@ -7,7 +17,9 @@ description = "The official wrapper for Dataspike API"
 authors = [
     {name = "Sergey Rublev", email = "sergey.rublev@dataspike.io"},
 ]
-dependencies = []
+dependencies = [
+    "pydantic>=1.10.5",
+]
 requires-python = ">=3.8"
 readme = "README.md"
 license = {text = "MIT"}

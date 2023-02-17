@@ -1,2 +1,4 @@
 /.venv/
 /.pdm.toml
+/build/
+/.idea/
