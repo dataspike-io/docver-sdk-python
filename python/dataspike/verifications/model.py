@@ -6,6 +6,8 @@ from uuid import UUID
 from datetime import datetime
 from ..documents.model import DocumentType, DocumentRef
 
+__all__ = ["Verification", "CheckStep", "CheckStatus", "VerificationStatus", "CheckError", "CheckResult", "Checks"]
+
 
 class CheckStep(StrEnum):
     Ocr = "document_cr"

@@ -5,6 +5,8 @@ from pydantic.fields import Field
 from uuid import UUID
 from enum import StrEnum
 
+__all__ = ["ApplicantInfo", "ApplicantVerificationStatus", "Applicant"]
+
 
 @dataclass
 class ApplicantInfo:

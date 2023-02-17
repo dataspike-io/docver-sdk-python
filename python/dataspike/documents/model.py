@@ -2,6 +2,8 @@ from pydantic.dataclasses import dataclass
 from enum import StrEnum
 from uuid import UUID
 
+__all__ = ["DocumentType", "DocumentSide", "DocumentRef"]
+
 
 class DocumentType(StrEnum):
     Passport = "passport"
