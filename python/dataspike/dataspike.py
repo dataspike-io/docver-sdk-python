@@ -34,7 +34,7 @@ class Api:
             "User-Agent": f"dataspike-python/{CURRENT_VERSION}",
         }
         self._session.headers.update(default_headers)
-        self.applicant = Applicants(self._session, api_endpoint)
+        self.applicant: Applicants = Applicants(self._session, api_endpoint)
         self.verification = Verifications(self._session, api_endpoint)
         self.document = Documents(self._session, api_endpoint)
         self.sdk = Sdk(self._session, api_endpoint)

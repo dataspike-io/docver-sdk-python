@@ -48,7 +48,9 @@ class Applicants(Resource):
         return UUID(data["id"])
 
     async def _list(self, page: int = 0, limit: int = 10) -> ClientResponse:
-        return await self._session.get(url=f"{self._api_endpoint}/api/v3/applicants?page={page}&?limit={limit}")
+        return await self._session.get(
+            url=f"{self._api_endpoint}/api/v3/applicants", params={"page": page, "limit": limit}
+        )
 
     @validate_arguments
     async def list(self, page: int = 0, limit: int = 10) -> PagedResponse[Applicant]:

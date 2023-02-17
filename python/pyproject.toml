@@ -1,12 +1,12 @@
 [tool.pdm]
 [tool.pdm.scripts]
-fmt = "black dataspike"
+fmt = "black dataspike tests"
 lint = "flake8 dataspike"
 type-check = "pyright dataspike"
 
 [tool.black]
 line-length = 120
-target-version = ['py38']
+target-version = ['py311']
 
 [tool.flake8]
 ignore = []
