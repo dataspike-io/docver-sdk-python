@@ -1,4 +1,11 @@
 [tool.pdm]
+[tool.pdm.scripts]
+fmt = "black ."
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
 [tool.pdm.dev-dependencies]
 dev = [
     "pytest==7.2.1",

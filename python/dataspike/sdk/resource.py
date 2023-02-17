@@ -9,12 +9,11 @@ from uuid import UUID
 
 
 class Sdk(Resource):
-
     def _create_token(self, applicant_id) -> Response:
         return self._session.post(
             url=f"{self._api_endpoint}/api/v3/sdk_token",
             json={"applicant_id": str(applicant_id)},
-            timeout=self._timeout
+            timeout=self._timeout,
         )
 
     @validate_arguments
@@ -22,21 +21,23 @@ class Sdk(Resource):
         response = self._create_token(applicant_id)
         self._assert_resp(response, [200, 201], "sdk token create")
         data = response.json()
-        return data['token']
+        return data["token"]
 
     @validate_arguments
-    def _upload_document(self, sdk_token: str, document_type: DocumentType, file,
-                         document_side: Optional[DocumentSide] = None) -> UUID:
+    def _upload_document(
+        self,
+        sdk_token: str,
+        document_type: DocumentType,
+        file,
+        document_side: Optional[DocumentSide] = None,
+    ) -> UUID:
         response = self._session.post(
             url=f"{self._api_endpoint}/api/v3/upload/sdk",
-            headers={
-                'Content-Type': None,
-                "ds-api-token": sdk_token
-            },
+            headers={"Content-Type": None, "ds-api-token": sdk_token},
             files={"file": ("file", file, "image/*")},
             data={"document_type": document_type, "side": document_side},
-            timeout=self._timeout
+            timeout=self._timeout,
         )
         self._assert_resp(response, [200, 201], "sdk upload file")
         data = response.json()
-        return UUID(data['document_id'])
+        return UUID(data["document_id"])

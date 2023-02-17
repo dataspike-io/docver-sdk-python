@@ -72,4 +72,3 @@ class Verification:
     def mrz_data(self) -> None | dict:
         if self.checks and self.checks.document_mrz:
             return self.checks.document_mrz.data
-

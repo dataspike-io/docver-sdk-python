@@ -5,6 +5,7 @@ from pydantic.fields import Field
 from uuid import UUID
 from enum import StrEnum
 
+
 @dataclass
 class ApplicantInfo:
     full_name: Optional[str] = Field(default=None)
@@ -15,13 +16,14 @@ class ApplicantInfo:
     citizenship: Optional[str] = Field(default=None)
     address: Optional[str] = Field(default=None)
     email: Optional[str] = Field(default=None)
-    phone: Optional[str]= Field(default=None)
+    phone: Optional[str] = Field(default=None)
 
 
 class ApplicantVerificationStatus(StrEnum):
     Initial = "initial"
     Passed = "passed"
     Failed = "failed"
+
 
 @dataclass
 class Applicant:
