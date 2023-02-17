@@ -1,3 +1,6 @@
+from types import TracebackType
+from typing import Optional, Type
+
 from aiohttp import ClientSession
 
 from .applicants.resource import Applicants
@@ -24,17 +27,34 @@ class Api:
         :param kwargs: aiottp.ClientSession params, pass here timeouts or other options
         """
         self._api_endpoint = api_endpoint
-        session = ClientSession(**kwargs)
+        self._session = ClientSession(**kwargs)
         default_headers = {
             "ds-api-token": api_token,
             "Content-Type": "application/json",
             "User-Agent": f"dataspike-python/{CURRENT_VERSION}",
         }
-        session.headers.update(default_headers)
-        self.applicant = Applicants(session, api_endpoint)
-        self.verification = Verifications(session, api_endpoint)
-        self.document = Documents(session, api_endpoint)
-        self.sdk = Sdk(session, api_endpoint)
+        self._session.headers.update(default_headers)
+        self.applicant = Applicants(self._session, api_endpoint)
+        self.verification = Verifications(self._session, api_endpoint)
+        self.document = Documents(self._session, api_endpoint)
+        self.sdk = Sdk(self._session, api_endpoint)
 
     def __repr__(self) -> str:
         return f"DataspikeApi<{self._api_endpoint}>"
+
+    def __enter__(self) -> None:
+        raise TypeError("Use async with instead")
+
+    async def __aenter__(self) -> "Api":
+        return self
+
+    async def __aexit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_val: Optional[BaseException],
+        exc_tb: Optional[TracebackType],
+    ) -> None:
+        await self.close()
+
+    async def close(self):
+        await self._session.close()

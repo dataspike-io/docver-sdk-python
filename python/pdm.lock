@@ -275,6 +275,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "pytest-aioresponses"
+version = "0.2.0"
+requires_python = ">=3.6,<4.0"
+summary = "py.test integration for aioresponses"
+dependencies = [
+    "aioresponses<0.8.0,>=0.7.1",
+    "pytest-asyncio>=0.14.0",
+    "pytest>=3.5.0",
+]
+
+[[package]]
+name = "pytest-asyncio"
+version = "0.20.3"
+requires_python = ">=3.7"
+summary = "Pytest support for asyncio"
+dependencies = [
+    "pytest>=6.1.0",
+]
+
+[[package]]
 name = "pytest-black"
 version = "0.3.12"
 requires_python = ">=2.7"
@@ -321,7 +341,7 @@ dependencies = [
 
 [metadata]
 lock_version = "4.1"
-content_hash = "sha256:48ffc4149288b3ff4a19bf02821ffd54bea6c4e25839a0d743cd604cb0f694c1"
+content_hash = "sha256:133e6d2781903cd3142a20fe3757c30727c5fea2c9606e592f9333eebfbd5c06"
 
 [metadata.files]
 "aiodns 3.0.0" = [
@@ -1049,6 +1069,14 @@ content_hash = "sha256:48ffc4149288b3ff4a19bf02821ffd54bea6c4e25839a0d743cd604cb
 "pytest 7.2.1" = [
     {url = "https://files.pythonhosted.org/packages/cc/02/8f59bf194c9a1ceac6330850715e9ec11e21e2408a30a596c65d54cf4d2a/pytest-7.2.1-py3-none-any.whl", hash = "sha256:c7c6ca206e93355074ae32f7403e8ea12163b1163c976fee7d4d84027c162be5"},
     {url = "https://files.pythonhosted.org/packages/e5/6c/f3a15217ac72912c28c5d7a7a8e87ff6d6475c9530595ae9f0f8dedd8dd8/pytest-7.2.1.tar.gz", hash = "sha256:d45e0952f3727241918b8fd0f376f5ff6b301cc0777c6f9a556935c92d8a7d42"},
+]
+"pytest-aioresponses 0.2.0" = [
+    {url = "https://files.pythonhosted.org/packages/86/c8/aeeafca2bec8ede3c08eac57287a7fecec2f0d62892a1d4cb11a2d38a5bc/pytest_aioresponses-0.2.0-py3-none-any.whl", hash = "sha256:1a78d1eb76e1bffe7adc83a1bad0d48c373b41289367ae1f5e7ec0fceb60a04d"},
+    {url = "https://files.pythonhosted.org/packages/ca/de/ef95de79da7a5aaf195281bd30251b06aece69f6b570730677c25455a243/pytest-aioresponses-0.2.0.tar.gz", hash = "sha256:61cced206857cb4e7aab10b61600527f505c358d046e7d3ad3ae09455d02d937"},
+]
+"pytest-asyncio 0.20.3" = [
+    {url = "https://files.pythonhosted.org/packages/45/74/9421cfde8def10c265b4f9ae19c95b8f4dc227f639cb8b89287d4946ac97/pytest_asyncio-0.20.3-py3-none-any.whl", hash = "sha256:f129998b209d04fcc65c96fc85c11e5316738358909a8399e93be553d7656442"},
+    {url = "https://files.pythonhosted.org/packages/6e/06/38b0ca5d53582bb49697626975b5540435ea064762d852b5c66646c729e9/pytest-asyncio-0.20.3.tar.gz", hash = "sha256:83cbf01169ce3e8eb71c6c278ccb0574d1a7a3bb8eaaf5e50e0ad342afb33b36"},
 ]
 "pytest-black 0.3.12" = [
     {url = "https://files.pythonhosted.org/packages/dc/cd/b64a3d5d2bc78c8aaff5b86abc6ae6a83e2cec02e751c5db351ca5100515/pytest-black-0.3.12.tar.gz", hash = "sha256:1d339b004f764d6cd0f06e690f6dd748df3d62e6fe1a692d6a5500ac2c5b75a5"},

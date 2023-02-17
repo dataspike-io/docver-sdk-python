@@ -31,6 +31,6 @@ class ApplicantVerificationStatus(StrEnum):
 class Applicant:
     applicant_id: UUID
     display_info: ApplicantInfo
-    verification_status: ApplicantVerificationStatus
+    verification_status: ApplicantVerificationStatus = Field(default="initial")
     provided_info: ApplicantInfo | None = Field(default=None)
     external_id: str | None = Field(default=None)
