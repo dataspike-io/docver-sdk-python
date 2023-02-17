@@ -1,10 +1,12 @@
 import dataclasses
 
+from typing import Optional
+
 from requests import Response
 from pydantic import validate_arguments
 from ..resource import Resource
-from ..common import *
-from model import *
+from ..common import PagedResponse
+from model import Applicant, ApplicantInfo
 from uuid import UUID
 
 
@@ -35,9 +37,7 @@ class Applicants(Resource):
         data = response.json()
         return Applicant(**data)
 
-    def _create(
-        self, external_id: Optional[str] = None, info: Optional[ApplicantInfo] = None
-    ) -> Response:
+    def _create(self, external_id: Optional[str] = None, info: Optional[ApplicantInfo] = None) -> Response:
         body = {}
         if external_id is not None:
             body["external_id"] = external_id
@@ -50,9 +50,7 @@ class Applicants(Resource):
         )
 
     @validate_arguments
-    def create(
-        self, external_id: Optional[str] = None, info: Optional[ApplicantInfo] = None
-    ) -> UUID:
+    def create(self, external_id: Optional[str] = None, info: Optional[ApplicantInfo] = None) -> UUID:
         response = self._create(external_id, info)
 
         assert (

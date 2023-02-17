@@ -1,7 +1,8 @@
 from typing import Optional
 from pydantic import validate_arguments
 from requests import Response
-from model import *
+from uuid import UUID
+from model import DocumentSide, DocumentType
 from ..resource import Resource
 
 

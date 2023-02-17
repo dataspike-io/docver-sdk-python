@@ -66,6 +66,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "flake8-pyproject"
+version = "1.2.2"
+requires_python = ">= 3.6"
+summary = "Flake8 plug-in loading the configuration from pyproject.toml"
+dependencies = [
+    "Flake8>=5",
+    "TOMLi; python_version < \"3.11\"",
+]
+
+[[package]]
 name = "idna"
 version = "3.4"
 requires_python = ">=3.5"
@@ -250,7 +260,7 @@ summary = "HTTP library with thread-safe connection pooling, file post, and more
 
 [metadata]
 lock_version = "4.1"
-content_hash = "sha256:674256450ea31593a7608ad584ddac67c0b98805a84f77dfbd7298d376d02055"
+content_hash = "sha256:9cef59316755c45f9b6859350d52418742860c2f63a2cfe0c7516fba8c343b4e"
 
 [metadata.files]
 "attrs 22.2.0" = [
@@ -393,6 +403,9 @@ content_hash = "sha256:674256450ea31593a7608ad584ddac67c0b98805a84f77dfbd7298d37
 "flake8 5.0.4" = [
     {url = "https://files.pythonhosted.org/packages/ad/00/9808c62b2d529cefc69ce4e4a1ea42c0f855effa55817b7327ec5b75e60a/flake8-5.0.4.tar.gz", hash = "sha256:6fbe320aad8d6b95cec8b8e47bc933004678dc63095be98528b7bdd2a9f510db"},
     {url = "https://files.pythonhosted.org/packages/cf/a0/b881b63a17a59d9d07f5c0cc91a29182c8e8a9aa2bde5b3b2b16519c02f4/flake8-5.0.4-py2.py3-none-any.whl", hash = "sha256:7a1cf6b73744f5806ab95e526f6f0d8c01c66d7bbe349562d22dfca20610b248"},
+]
+"flake8-pyproject 1.2.2" = [
+    {url = "https://files.pythonhosted.org/packages/91/8a/607fc3cb97714873e3c333afb4927e0341cec2677a26ca0dc7e0e666f016/flake8_pyproject-1.2.2-py3-none-any.whl", hash = "sha256:52d412219e7db6227faa654675b1435947b11d49b453f3eced760f19bdd6f06a"},
 ]
 "idna 3.4" = [
     {url = "https://files.pythonhosted.org/packages/8b/e1/43beb3d38dba6cb420cefa297822eac205a277ab43e5ba5d5c46faf96438/idna-3.4.tar.gz", hash = "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"},

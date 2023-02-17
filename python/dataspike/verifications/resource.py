@@ -1,9 +1,10 @@
-from typing import Any
+from typing import Any, Sequence, Optional
+from uuid import UUID
 
 from pydantic import validate_arguments
 from requests import Response
 
-from model import *
+from model import Verification
 from ..documents.model import DocumentType
 from ..resource import Resource
 

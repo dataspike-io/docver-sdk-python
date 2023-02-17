@@ -1,10 +1,21 @@
 [tool.pdm]
 [tool.pdm.scripts]
-fmt = "black ."
+fmt = "black dataspike"
+lint = "flake8 dataspike"
+type-check = "pyright dataspike"
 
 [tool.black]
-line-length = 88
+line-length = 120
 target-version = ['py38']
+
+[tool.flake8]
+ignore = []
+per-file-ignores = [
+    '__init__.py:F403,F401',
+]
+max-line-length = 120
+count = true
+
 
 [tool.pdm.dev-dependencies]
 dev = [
@@ -15,6 +26,7 @@ dev = [
     "pytest-black>=0.3.12",
     "flake8>=5.0.4",
     "pyright>=1.1.294",
+    "flake8-pyproject>=1.2.2",
 ]
 
 [project]

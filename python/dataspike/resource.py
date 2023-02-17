@@ -6,9 +6,7 @@ _TIMEOUT_TPE = float | tuple[float, float] | tuple[float, None]
 
 
 class Resource:
-    def __init__(
-        self, session: Session, api_endpoint: str, timeout: Optional[_TIMEOUT_TPE]
-    ):
+    def __init__(self, session: Session, api_endpoint: str, timeout: Optional[_TIMEOUT_TPE]):
         self._api_endpoint = api_endpoint
         self._session = session
         self._timeout = timeout
