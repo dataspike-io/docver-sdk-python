@@ -3,10 +3,10 @@ from typing import Optional, Type
 
 from aiohttp import ClientSession
 
-from .applicants.resource import Applicants
-from .documents.resource import Documents
-from .sdk.resource import Sdk
-from .verifications.resource import Verifications
+from .applicants.applicants import Applicants
+from .documents.documents import Documents
+from .sdk.sdk import Sdk
+from .verifications.verifications import Verifications
 
 try:
     import pkg_resources
