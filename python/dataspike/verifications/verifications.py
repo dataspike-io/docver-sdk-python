@@ -7,6 +7,7 @@ from pydantic import validate_arguments
 from .model import Verification
 from ..documents.model import DocumentType
 from ..resource import Resource
+from ..common import PagedResponse
 
 
 class Verifications(Resource):
@@ -59,3 +60,30 @@ class Verifications(Resource):
                 return None
             data = await response.json()
         return Verification(**data)
+
+    def _list(self, page: int = 0, limit: int = 10) -> _RequestContextManager:
+        return self._session.get(
+            url=f"{self._api_endpoint}/api/v3/verifications", params={"page": page, "limit": limit}
+        )
+
+    @validate_arguments
+    async def list(self, page: int = 0, limit: int = 10) -> PagedResponse[Verification]:
+        async with self._list(page, limit) as response:
+            await self._validate_resp(response, [200], "list verifications")
+            data = await response.json()
+        return PagedResponse[Verification](**data)
+
+    def _list_for_applicant(self, applicant_id: UUID, page: int = 0, limit: int = 10) -> _RequestContextManager:
+        return self._session.get(
+            url=f"{self._api_endpoint}/api/v3/verifications/applicant/{applicant_id}",
+            params={"page": page, "limit": limit},
+        )
+
+    @validate_arguments
+    async def list_for_applicant(
+        self, applicant_id: UUID, page: int = 0, limit: int = 10
+    ) -> PagedResponse[Verification]:
+        async with self._list_for_applicant(applicant_id, page, limit) as response:
+            await self._validate_resp(response, [200], "list verifications for applicant")
+            data = await response.json()
+        return PagedResponse[Verification](**data)
