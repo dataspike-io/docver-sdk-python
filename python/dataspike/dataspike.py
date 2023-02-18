@@ -26,14 +26,13 @@ class Api:
         :param api_endpoint: API endpoint, default "https://api.dataspike.io"
         :param kwargs: aiottp.ClientSession params, pass here timeouts or other options
         """
+
         self._api_endpoint = api_endpoint
-        self._session = ClientSession(**kwargs)
         default_headers = {
             "ds-api-token": api_token,
-            "Content-Type": "application/json",
             "User-Agent": f"dataspike-python/{CURRENT_VERSION}",
         }
-        self._session.headers.update(default_headers)
+        self._session = ClientSession(headers=default_headers, **kwargs)
         self.applicant: Applicants = Applicants(self._session, api_endpoint)
         self.verification = Verifications(self._session, api_endpoint)
         self.document = Documents(self._session, api_endpoint)
@@ -56,5 +55,5 @@ class Api:
     ) -> None:
         await self.close()
 
-    async def close(self):
+    async def close(self) -> None:
         await self._session.close()
