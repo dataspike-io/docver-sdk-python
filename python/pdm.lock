@@ -126,6 +126,11 @@ requires_python = ">=3.7"
 summary = "Backport of PEP 654 (exception groups)"
 
 [[package]]
+name = "filetype"
+version = "1.2.0"
+summary = "Infer file type and MIME type of any file/buffer. No external dependencies."
+
+[[package]]
 name = "flake8"
 version = "5.0.4"
 requires_python = ">=3.6.1"
@@ -341,7 +346,7 @@ dependencies = [
 
 [metadata]
 lock_version = "4.1"
-content_hash = "sha256:133e6d2781903cd3142a20fe3757c30727c5fea2c9606e592f9333eebfbd5c06"
+content_hash = "sha256:02186890bc6e8650bed27dc34c0250a5eb40bf1f5769dbb7ea5ea5010c211917"
 
 [metadata.files]
 "aiodns 3.0.0" = [
@@ -762,6 +767,10 @@ content_hash = "sha256:133e6d2781903cd3142a20fe3757c30727c5fea2c9606e592f9333eeb
 "exceptiongroup 1.1.0" = [
     {url = "https://files.pythonhosted.org/packages/15/ab/dd27fb742b19a9d020338deb9ab9a28796524081bca880ac33c172c9a8f6/exceptiongroup-1.1.0.tar.gz", hash = "sha256:bcb67d800a4497e1b404c2dd44fca47d3b7a5e5433dbab67f96c1a685cdfdf23"},
     {url = "https://files.pythonhosted.org/packages/e8/14/9c6a7e5f12294ccd6975a45e02899ed25468cd7c2c86f3d9725f387f9f5f/exceptiongroup-1.1.0-py3-none-any.whl", hash = "sha256:327cbda3da756e2de031a3107b81ab7b3770a602c4d16ca618298c526f4bec1e"},
+]
+"filetype 1.2.0" = [
+    {url = "https://files.pythonhosted.org/packages/18/79/1b8fa1bb3568781e84c9200f951c735f3f157429f44be0495da55894d620/filetype-1.2.0-py2.py3-none-any.whl", hash = "sha256:7ce71b6880181241cf7ac8697a2f1eb6a8bd9b429f7ad6d27b8db9ba5f1c2d25"},
+    {url = "https://files.pythonhosted.org/packages/bb/29/745f7d30d47fe0f251d3ad3dc2978a23141917661998763bebb6da007eb1/filetype-1.2.0.tar.gz", hash = "sha256:66b56cd6474bf41d8c54660347d37afcc3f7d1970648de365c102ef77548aadb"},
 ]
 "flake8 5.0.4" = [
     {url = "https://files.pythonhosted.org/packages/ad/00/9808c62b2d529cefc69ce4e4a1ea42c0f855effa55817b7327ec5b75e60a/flake8-5.0.4.tar.gz", hash = "sha256:6fbe320aad8d6b95cec8b8e47bc933004678dc63095be98528b7bdd2a9f510db"},
