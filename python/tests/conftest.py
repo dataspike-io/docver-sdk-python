@@ -3,7 +3,8 @@ import dataclasses
 import json
 import pathlib
 import sys
-from uuid import UUID
+from uuid import UUID, uuid4
+from datetime import datetime
 
 import pytest
 import pytest_asyncio
@@ -15,7 +16,7 @@ except ImportError:
     sys.path.insert(0, rootdir)
     from dataspike import Api
 
-from dataspike import PagedResponse
+from dataspike import *
 
 
 class ResponseJsonEncoder(json.JSONEncoder):
@@ -23,8 +24,10 @@ class ResponseJsonEncoder(json.JSONEncoder):
         match obj:
             case UUID():
                 return str(obj)
+            case datetime() as d:
+                return d.isoformat()
             case PagedResponse():
-                return {"data": obj.data, "has_next": obj.has_next}
+                return {"data": list(obj.data), "has_next": obj.has_next}
             case x if dataclasses.is_dataclass(x) and not isinstance(obj, type):
                 return dataclasses.asdict(obj)
             case _:
@@ -47,3 +50,29 @@ def pytest_collection_modifyitems(config, items):
     for item in items:
         if asyncio.iscoroutinefunction(item.function):
             item.add_marker(pytest.mark.asyncio)
+
+
+@pytest.fixture
+def verification() -> Verification:
+    return Verification(
+        id=uuid4(),
+        applicant_id=uuid4(),
+        status=VerificationStatus.Verified,
+        organization_id="org_123",
+        account_id="api",
+        account_email="api@api.api",
+        created_at=datetime.now(),
+        checks=Checks(
+            document_mrz=CheckResult(status=CheckStatus.Verified, data={"mrz": {"name": "John"}}),
+            document_ocr=CheckResult(status=CheckStatus.Verified),
+            face_comparison=CheckResult(status=CheckStatus.Verified),
+            poa=CheckResult(status=CheckStatus.Verified),
+        ),
+        completed_at=datetime.now(),
+        documents=[
+            DocumentRef(document_id=uuid4(), document_type=DocumentType.Passport),
+            DocumentRef(document_id=uuid4(), document_type=DocumentType.Selfie),
+            DocumentRef(document_id=uuid4(), document_type=DocumentType.Poa),
+        ],
+        document_type=DocumentType.Passport,
+    )

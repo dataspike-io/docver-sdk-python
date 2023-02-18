@@ -3,7 +3,7 @@
 fmt = "black dataspike tests"
 lint = "flake8 dataspike"
 type-check = "pyright dataspike"
-all-with-fmt = {shell = "black dataspike tests; flake8 dataspike tests; pyright ."}
+fmt-with-checks = {shell = "black dataspike tests; flake8 dataspike tests; pyright ."}
 
 [tool.black]
 line-length = 120
@@ -13,6 +13,7 @@ target-version = ['py311']
 ignore = []
 per-file-ignores = [
     '__init__.py:F401,F403',
+    'conftest.py:F403,F405'
 ]
 max-line-length = 120
 count = true

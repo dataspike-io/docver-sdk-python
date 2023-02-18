@@ -51,7 +51,7 @@ async def test_applicant_create(aioresponses, api: Api):
 async def test_applicant_list(aioresponses, api: Api):
     applicant_id = UUID(int=21355515246424524467342344623421465345)
     applicant = Applicant(applicant_id=applicant_id, display_info=ApplicantInfo(full_name="John Doe"))
-    data = PagedResponse(data=[applicant], has_next=False)
+    data = PagedResponse[Applicant](data=[applicant], has_next=False)
     aioresponses.get(
         r"https://api.dataspike.io/api/v3/applicants?page=0&limit=10",
         status=200,
@@ -60,7 +60,8 @@ async def test_applicant_list(aioresponses, api: Api):
 
     got = await api.applicant.list()
     aioresponses.assert_called_once()
-    assert got == data
+    assert list(got.data) == list(data.data)
+    assert got.has_next == data.has_next
 
 
 async def test_applicant_delete(aioresponses, api: Api):

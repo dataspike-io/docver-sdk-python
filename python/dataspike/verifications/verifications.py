@@ -1,4 +1,4 @@
-from typing import Any, Sequence, Optional
+from typing import Any, Optional, Iterable
 from uuid import UUID
 
 from aiohttp.client import _RequestContextManager
@@ -20,7 +20,7 @@ class Verifications(Resource):
 
     def _create(
         self,
-        checks_required: Sequence[DocumentType],
+        checks_required: Iterable[DocumentType],
         applicant_id: Optional[UUID] = None,
     ) -> _RequestContextManager:
         body: dict[str, Any] = {"checks_required": checks_required}
@@ -32,7 +32,7 @@ class Verifications(Resource):
     @validate_arguments
     async def create(
         self,
-        checks_required: Sequence[DocumentType],
+        checks_required: Iterable[DocumentType],
         applicant_id: Optional[UUID] = None,
     ) -> Verification:
         async with self._create(checks_required, applicant_id) as response:
@@ -49,7 +49,7 @@ class Verifications(Resource):
         async with self._get(verification_id) as response:
             await self._validate_resp(response, [200], "get verification")
             data = await response.json()
-        return Verification(**data)
+            return Verification(**data)
 
     @validate_arguments
     async def find(self, verification_id: UUID) -> Optional[Verification]:

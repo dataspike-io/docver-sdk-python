@@ -67,8 +67,8 @@ class Verification:
     checks: Checks | None = Field(default=None)
     document_type: Optional[DocumentType] = Field(default=None)
     completed_at: Optional[datetime] = Field(default=None)
-    document_ids: Sequence[UUID] = Field(default_factory=list)
-    documents: Sequence[DocumentRef] = Field(default_factory=list)
+    document_ids: list[UUID] = Field(default_factory=list)
+    documents: list[DocumentRef] = Field(default_factory=list)
 
     @property
     def mrz_data(self) -> None | dict:
