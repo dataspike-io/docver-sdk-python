@@ -25,4 +25,4 @@ class Documents(Resource):
         async with self._session.post(url=f"{self._api_endpoint}/api/v3/upload/{applicant_id}", data=data) as response:
             await self._validate_resp(response, [200, 201], "upload document")
             data = await response.json()
-            return data["document_id"]
+            return UUID(data["document_id"])

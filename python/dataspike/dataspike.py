@@ -27,7 +27,7 @@ class Api:
         :param kwargs: aiottp.ClientSession params, pass here timeouts or other options
         """
 
-        self._api_endpoint = api_endpoint
+        self.api_endpoint = api_endpoint
         default_headers = {
             "ds-api-token": api_token,
             "User-Agent": f"dataspike-python/{CURRENT_VERSION}",
@@ -39,7 +39,7 @@ class Api:
         self.sdk = Sdk(self._session, api_endpoint)
 
     def __repr__(self) -> str:
-        return f"DataspikeApi<{self._api_endpoint}>"
+        return f"DataspikeApi<{self.api_endpoint}>"
 
     def __enter__(self) -> None:
         raise TypeError("Use async with instead")
