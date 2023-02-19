@@ -21,17 +21,16 @@ from dataspike import *
 
 class ResponseJsonEncoder(json.JSONEncoder):
     def default(self, obj):
-        match obj:
-            case UUID():
-                return str(obj)
-            case datetime() as d:
-                return d.isoformat()
-            case PagedResponse():
-                return {"data": list(obj.data), "has_next": obj.has_next}
-            case x if dataclasses.is_dataclass(x) and not isinstance(obj, type):
-                return dataclasses.asdict(obj)
-            case _:
-                return super().default(obj)
+        if isinstance(obj, UUID):
+            return str(obj)
+        elif isinstance(obj, datetime):
+            return obj.isoformat()
+        elif isinstance(obj, PagedResponse):
+            return {"data": list(obj.data), "has_next": obj.has_next}
+        elif dataclasses.is_dataclass(obj) and not isinstance(obj, type):
+            return dataclasses.asdict(obj)
+        else:
+            return super().default(obj)
 
 
 def to_json(obj) -> str:

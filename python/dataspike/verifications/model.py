@@ -1,5 +1,5 @@
 from typing import Sequence, Optional
-from enum import StrEnum
+from ..utils import StrEnum
 from pydantic.dataclasses import dataclass
 from pydantic.fields import Field
 from uuid import UUID
@@ -48,11 +48,11 @@ class CheckResult:
 
 @dataclass
 class Checks:
-    document_ocr: CheckResult | None = Field(default=None)
-    face_comparison: CheckResult | None = Field(default=None)
-    liveness: CheckResult | None = Field(default=None)
-    document_mrz: CheckResult | None = Field(default=None)
-    poa: CheckResult | None = Field(default=None)
+    document_ocr: Optional[CheckResult] = Field(default=None)
+    face_comparison: Optional[CheckResult] = Field(default=None)
+    liveness: Optional[CheckResult] = Field(default=None)
+    document_mrz: Optional[CheckResult] = Field(default=None)
+    poa: Optional[CheckResult] = Field(default=None)
 
 
 @dataclass
@@ -64,13 +64,13 @@ class Verification:
     account_id: str
     account_email: str
     created_at: datetime
-    checks: Checks | None = Field(default=None)
+    checks: Optional[Checks] = Field(default=None)
     document_type: Optional[DocumentType] = Field(default=None)
     completed_at: Optional[datetime] = Field(default=None)
     document_ids: list[UUID] = Field(default_factory=list)
     documents: list[DocumentRef] = Field(default_factory=list)
 
     @property
-    def mrz_data(self) -> None | dict:
+    def mrz_data(self) -> Optional[dict]:
         if self.checks and self.checks.document_mrz:
             return self.checks.document_mrz.data

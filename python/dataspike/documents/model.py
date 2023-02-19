@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic.dataclasses import dataclass
 from pydantic.fields import Field
-from enum import StrEnum
+from ..utils import StrEnum
 from uuid import UUID
 
 __all__ = ["DocumentType", "DocumentSide", "DocumentRef", "Document"]

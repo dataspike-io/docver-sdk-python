@@ -3,7 +3,7 @@ from typing import Literal, Optional
 from pydantic.dataclasses import dataclass
 from pydantic.fields import Field
 from uuid import UUID
-from enum import StrEnum
+from ..utils import StrEnum
 
 __all__ = ["ApplicantInfo", "ApplicantVerificationStatus", "Applicant"]
 
@@ -32,5 +32,5 @@ class Applicant:
     applicant_id: UUID
     display_info: ApplicantInfo
     verification_status: ApplicantVerificationStatus = Field(default="initial")
-    provided_info: ApplicantInfo | None = Field(default=None)
-    external_id: str | None = Field(default=None)
+    provided_info: Optional[ApplicantInfo] = Field(default=None)
+    external_id: Optional[str] = Field(default=None)
