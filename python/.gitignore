@@ -1,6 +1,7 @@
 /.venv/
 /.pdm.toml
 /build/
+/dist/
 /.idea/
 __pycache__/
 .*cache/

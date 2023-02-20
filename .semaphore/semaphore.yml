@@ -50,6 +50,7 @@ blocks:
             - cd python
             - pip install pdm
             - pdm install
+            - pdm build
             - pdm publish
 
 after_pipeline:
