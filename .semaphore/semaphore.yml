@@ -27,6 +27,7 @@ blocks:
         commands:
           - sem-version python $PYTHON_VERSION
           - cd python
+          - pip install pdm
           - pdm install
           - black --check .
           - ruff dataspike tests
