@@ -12,3 +12,7 @@ async def test_sdk_create_token(aioresponses, api: Api):
     got = await api.sdk.create_token(applicant_id)
     aioresponses.assert_called_once()
     assert got == expected
+
+
+def test_honeypot():
+    assert False, "hello"
