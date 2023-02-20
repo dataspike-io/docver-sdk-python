@@ -4,7 +4,7 @@ fmt = "black dataspike tests"
 lint = "ruff dataspike tests"
 type-check = "pyright ."
 fmt-with-checks = {shell = "black dataspike tests; ruff dataspike tests; pyright ."}
-ci-checks = {shell = "black --check . && ruff dataspike tests && pytest . && pyright ."}
+ci-checks = {shell = "black --check . && ruff dataspike tests && pytest --junitxml=results.xml . && pyright ."}
 
 [tool.black]
 line-length = 120
