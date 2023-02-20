@@ -1,0 +1,40 @@
+version: v1.0
+name: Init
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2004
+global_job_config:
+  secrets:
+    - name: READ_REPO_ACCESS
+  prologue:
+    commands:
+      - export SEMAPHORE_GIT_DEPTH=1
+      - checkout
+blocks:
+  - name: "Python: tests and checks"
+    run:
+      when: "change_in('/python')"
+    task:
+      env_vars:
+        - name: PDM_IGNORE_SAVED_PYTHON
+          value: "1"
+      jobs:
+      - name: Python library checks
+        matrix:
+          - env_var: PYTHON_VERSION
+            values: [ "3.9", "3.10", "3.11" ]
+        commands:
+          - sem-version python $PYTHON_VERSION
+          - cd python
+          - pip install pdm
+          - pdm install
+          - pdm run ci-checks
+          - test-results publish results.xml
+
+after_pipeline:
+  task:
+    jobs:
+      - name: Publish Results
+        commands:
+          - test-results gen-pipeline-report
