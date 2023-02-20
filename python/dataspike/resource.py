@@ -13,11 +13,11 @@ class Resource:
     @classmethod
     async def _validate_resp(cls, response: ClientResponse, statuses: Iterable[int], method: str) -> None:
         if response.status not in statuses:
-            s = map(lambda i: str(i), statuses)
+            expected = ", ".join(str(i) for i in statuses)
             response_text = await response.text()
             raise UnexpectedResponseStatus(
                 method,
                 response.status,
                 response_text,
-                f"{method} failed, expected {', '.join(s)} " f"got {response.status}, response {response_text}",
+                f"{method} failed, expected {expected} " f"got {response.status}, response {response_text}",
             )

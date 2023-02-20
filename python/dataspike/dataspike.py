@@ -10,12 +10,7 @@ from .verifications.verifications import Verifications
 
 __all__ = ["Api"]
 
-try:
-    from .version import _version
-
-    CURRENT_VERSION = _version
-except ImportError:
-    CURRENT_VERSION = "dev"
+from .__version__ import __version__
 
 
 class Api:
@@ -29,7 +24,7 @@ class Api:
         self.api_endpoint = api_endpoint
         default_headers = {
             "ds-api-token": api_token,
-            "User-Agent": f"dataspike-python/{CURRENT_VERSION}",
+            "User-Agent": f"dataspike-python/{__version__}",
         }
         self._session = ClientSession(headers=default_headers, **kwargs)
         self.applicant: Applicants = Applicants(self._session, api_endpoint)
