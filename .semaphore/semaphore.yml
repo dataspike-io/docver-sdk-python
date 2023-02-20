@@ -29,7 +29,4 @@ blocks:
           - cd python
           - pip install pdm
           - pdm install
-          - black --check .
-          - ruff dataspike tests
-          - pytest .
-          - pyright .
+          - pdm run ci-checks
