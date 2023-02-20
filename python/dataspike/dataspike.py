@@ -8,13 +8,12 @@ from .documents.documents import Documents
 from .sdk.sdk import Sdk
 from .verifications.verifications import Verifications
 
-try:
-    import pkg_resources
+__all__ = ["Api"]
 
-    try:
-        CURRENT_VERSION = pkg_resources.get_distribution("dataspike-python").version
-    except pkg_resources.DistributionNotFound:
-        CURRENT_VERSION = "dev"
+try:
+    from .version import _version
+
+    CURRENT_VERSION = _version
 except ImportError:
     CURRENT_VERSION = "dev"
 

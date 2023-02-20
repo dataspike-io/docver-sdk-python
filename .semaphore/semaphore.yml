@@ -28,7 +28,7 @@ blocks:
           - sem-version python $PYTHON_VERSION
           - cd python
           - pip install pdm
-          - pdm install
+          - pdm install --no-self
           - pdm run ci-checks
           - test-results publish results.xml
 
@@ -49,7 +49,8 @@ blocks:
             - sem-version python 3.11
             - cd python
             - pip install pdm
-            - pdm install
+            - pdm install --no-self
+            - pdm build
             - pdm publish
 
 after_pipeline:

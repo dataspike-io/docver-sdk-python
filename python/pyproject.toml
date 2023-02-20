@@ -31,7 +31,7 @@ dev = [
 
 [project]
 name = "dataspike"
-version = "0.1.0"
+dynamic = ["version"]
 description = "The official wrapper for Dataspike API"
 authors = [
     {name = "Sergey Rublev", email = "sergey.rublev@dataspike.io"},
@@ -49,3 +49,10 @@ license = {text = "MIT"}
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
+
+[tool.pdm.version]
+source = "scm"
+write_to = "dataspike/version.py"
+write_template = "_version = '{}'"
+
+[tool.pdm.build]
