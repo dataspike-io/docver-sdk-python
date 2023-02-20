@@ -13,6 +13,24 @@ dependencies = [
 requires-python = ">=3.9"
 readme = "README.md"
 license = {text = "MIT"}
+keywords = ["dataspike", "kyc", "identity"]
+classifiers = [
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries",
+    "License :: OSI Approved :: MIT License",
+    "Typing :: Typed",
+    "Framework :: AsyncIO",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Developers"
+]
+[project.urls]
+Homepage = "https://dataspike.io"
+Repository = "github.com/dataspike-io/docver-sdk"
+Documentation = "https://docs.dataspike.io"
 
 [tool.pdm]
 [tool.pdm.scripts]
