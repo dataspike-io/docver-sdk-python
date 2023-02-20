@@ -1,0 +1,7 @@
+/.venv/
+/.pdm.toml
+/build/
+/.idea/
+__pycache__/
+.*cache/
+.venv/
