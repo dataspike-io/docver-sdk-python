@@ -72,6 +72,7 @@ dev = [
     "aioresponses>=0.7.4",
     "pytest-aioresponses>=0.2.0",
     "ruff>=0.0.247",
+    "pydantic-factories>=1.17.2"
 ]
 
 [build-system]
