@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 from uuid import UUID
 
 from pydantic.dataclasses import dataclass
@@ -7,6 +7,7 @@ from ..utils import StrEnum
 
 __all__ = [
     "EntityTag",
+    "EntityTagStrict",
     "EntityType",
     "EntityName",
     "EntityInfo",
@@ -38,7 +39,7 @@ class EntityType(StrEnum):
     Aircraft = "Aircraft"
 
 
-class EntityTag(StrEnum):
+class EntityTagStrict(StrEnum):
     Unknown = "Unknown"
     Sanctions = "Sanctions"
     Criminal = "Criminal"
@@ -48,6 +49,13 @@ class EntityTag(StrEnum):
     Terrorism = "Terrorism"
     Social = "Social"
     Leaks = "Leaks"
+
+    @classmethod
+    def _missing_(cls, value):
+        return value
+
+
+EntityTag = Union[EntityTagStrict, str]
 
 
 class DataSource(StrEnum):
@@ -126,6 +134,10 @@ class DataSource(StrEnum):
     UAE_TERROR = "UAE_TERROR"
     NL_MOST_WANTED = "NL_MOST_WANTED"
 
+    @classmethod
+    def _missing_(cls, value):
+        return value
+
 
 @dataclass
 class DateRange:
@@ -149,7 +161,7 @@ class AMLSearchRequest:
     postal_codes: Optional[list[str]] = Field(default=None)
     date_of_birth: Optional[DateRange] = Field(default=None)
     tags: Optional[list[EntityTag]] = Field(default=None)
-    sources: Optional[list[DataSource]] = Field(default=None)
+    sources: Optional[list[Union[DataSource, str]]] = Field(default=None)
     registration_ids: Optional[list[str]] = Field(default=None)
 
 
@@ -163,7 +175,7 @@ class EntityName:
 
 @dataclass
 class SourceData:
-    source_id: DataSource
+    source_id: Union[DataSource, str]
     name: str
     reason: Optional[str] = Field(default=None)
     summary: Optional[str] = Field(default=None)
