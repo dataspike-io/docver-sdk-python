@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import Optional, Union, List
 from uuid import UUID
 
 from pydantic.dataclasses import dataclass
@@ -159,15 +159,15 @@ class RiskScore(StrEnum):
 @dataclass
 class AMLSearchRequest:
     full_name: str
-    risk_scores: list[RiskScore]
-    countries: Optional[list[str]] = Field(default=None)
-    cities: Optional[list[str]] = Field(default=None)
-    entity_types: Optional[list[EntityType]] = Field(default=None)
-    postal_codes: Optional[list[str]] = Field(default=None)
+    risk_scores: List[RiskScore]
+    countries: Optional[List[str]] = Field(default=None)
+    cities: Optional[List[str]] = Field(default=None)
+    entity_types: Optional[List[EntityType]] = Field(default=None)
+    postal_codes: Optional[List[str]] = Field(default=None)
     date_of_birth: Optional[DateRange] = Field(default=None)
-    tags: Optional[list[EntityTagStr]] = Field(default=None)
-    sources: Optional[list[DataSourceStr]] = Field(default=None)
-    registration_ids: Optional[list[str]] = Field(default=None)
+    tags: Optional[List[EntityTagStr]] = Field(default=None)
+    sources: Optional[List[DataSourceStr]] = Field(default=None)
+    registration_ids: Optional[List[str]] = Field(default=None)
 
 
 @dataclass
@@ -186,7 +186,7 @@ class SourceData:
     summary: Optional[str] = Field(default=None)
     source_url: Optional[str] = Field(default=None)
     risk_score: Optional[RiskScore] = Field(default=None)
-    tags: Optional[list[EntityTagStr]] = Field(default=None)  # re-check this
+    tags: Optional[List[EntityTagStr]] = Field(default=None)  # re-check this
 
 
 @dataclass
@@ -207,9 +207,9 @@ class GenericData:
 
 @dataclass
 class ContactInfo:
-    emails: Optional[list[str]] = Field(default=None)
-    phones: Optional[list[str]] = Field(default=None)
-    websites: Optional[list[str]] = Field(default=None)
+    emails: Optional[List[str]] = Field(default=None)
+    phones: Optional[List[str]] = Field(default=None)
+    websites: Optional[List[str]] = Field(default=None)
 
 
 @dataclass
@@ -258,24 +258,24 @@ class Gender(StrEnum):
 
 @dataclass
 class EntityFields:
-    names: list[EntityName]
-    sources: Optional[list[SourceData]] = Field(default=None)
+    names: List[EntityName]
+    sources: Optional[List[SourceData]] = Field(default=None)
     media: Optional[AdverseMedia] = Field(default=None)  # array or not?
-    images: Optional[list[GenericData]] = Field(default=None)
+    images: Optional[List[GenericData]] = Field(default=None)
     contact_info: Optional[ContactInfo] = Field(default=None)
-    registration_ids: Optional[list[RegistrationId]] = Field(default=None)
-    addresses: Optional[list[LocationData]] = Field(default=None)
-    genders: Optional[list[Gender]] = Field(default=None)
-    dates_of_birth: Optional[list[DateRange]] = Field(default=None)
-    places_of_birth: Optional[list[LocationData]] = Field(default=None)
-    dates_of_death: Optional[list[DateRange]] = Field(default=None)
-    places_of_death: Optional[list[LocationData]] = Field(default=None)
-    citizenships: Optional[list[CountryAlpha2]] = Field(default=None)
-    nationalities: Optional[list[str]] = Field(default=None)
-    political_roles: Optional[list[PoliticalRole]] = Field(default=None)
-    occupations: Optional[list[Occupation]] = Field(default=None)
-    companies_and_enterprises: Optional[list[EntityInfo]] = Field(default=None)
-    owners_and_beneficiaries: Optional[list[EntityInfo]] = Field(default=None)
+    registration_ids: Optional[List[RegistrationId]] = Field(default=None)
+    addresses: Optional[List[LocationData]] = Field(default=None)
+    genders: Optional[List[Gender]] = Field(default=None)
+    dates_of_birth: Optional[List[DateRange]] = Field(default=None)
+    places_of_birth: Optional[List[LocationData]] = Field(default=None)
+    dates_of_death: Optional[List[DateRange]] = Field(default=None)
+    places_of_death: Optional[List[LocationData]] = Field(default=None)
+    citizenships: Optional[List[CountryAlpha2]] = Field(default=None)
+    nationalities: Optional[List[str]] = Field(default=None)
+    political_roles: Optional[List[PoliticalRole]] = Field(default=None)
+    occupations: Optional[List[Occupation]] = Field(default=None)
+    companies_and_enterprises: Optional[List[EntityInfo]] = Field(default=None)
+    owners_and_beneficiaries: Optional[List[EntityInfo]] = Field(default=None)
     updated_at: Optional[int] = Field(default=None)
 
 
@@ -285,7 +285,7 @@ class AMLEntity:
     type: EntityType
     risk_score: RiskScore
     fields: EntityFields
-    tags: Optional[list[EntityTagStr]] = Field(default=None)
+    tags: Optional[List[EntityTagStr]] = Field(default=None)
     annotation: Optional[str] = Field(default=None)
 
 
@@ -293,4 +293,4 @@ class AMLEntity:
 class AMLResponse:
     requested_name: str
     search_uuid: UUID
-    data: list[AMLEntity]
+    data: List[AMLEntity]

@@ -23,7 +23,7 @@ blocks:
       - name: Python library checks
         matrix:
           - env_var: PYTHON_VERSION
-            values: [ "3.9", "3.10", "3.11" ]
+            values: [ "3.8", "3.9", "3.10", "3.11" ]
         commands:
           - sem-version python $PYTHON_VERSION
           - cd python

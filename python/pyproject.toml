@@ -10,7 +10,7 @@ dependencies = [
     "aiohttp[speedups]>=3.8.4",
     "filetype>=1.2.0",
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.8"
 readme = "README.md"
 license = {text = "MIT"}
 keywords = ["dataspike", "kyc", "identity"]
@@ -21,6 +21,7 @@ classifiers = [
     "Typing :: Typed",
     "Framework :: AsyncIO",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -42,11 +43,11 @@ ci-checks = {shell = "black --check . && ruff dataspike tests && pytest --junitx
 
 [tool.black]
 line-length = 120
-target-version = ["py39", "py310", "py311"]
+target-version = ["py38", "py39", "py310", "py311"]
 
 [tool.ruff]
 line-length = 120
-target-version = "py39" # minimal supported version
+target-version = "py38" # minimal supported version
 select = [
   "B",    # flake8-bugbear
   "C4",   # flake8-comprehensions
@@ -85,7 +86,7 @@ write_to = "dataspike/VERSION"
 
 
 [tool.pdm.build]
-excludes = ["./**/.git"]
+excludes = ["./**/.git", './**/.*']
 package-dir = "."
 includes = ["dataspike"]
 source-includes = ["tests", "README.md"]
