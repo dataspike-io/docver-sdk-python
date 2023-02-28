@@ -34,7 +34,7 @@ blocks:
 
   - name: "[Python] publish"
     run:
-      when: "tag =~ '.*'"
+      when: "tag =~ '^v\\d+\\.\\d+\\.\\d+$'"
     task:
       secrets:
         - name: SDK_PYPI_TOKEN
