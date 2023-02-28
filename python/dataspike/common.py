@@ -1,4 +1,6 @@
-from typing import Generic, TypeVar
+from __future__ import annotations
+
+from typing import Generic, TypeVar, List
 
 from pydantic.generics import GenericModel
 
@@ -8,5 +10,5 @@ T = TypeVar("T")
 
 
 class PagedResponse(GenericModel, Generic[T]):
-    data: list[T]
+    data: List[T]
     has_next: bool
