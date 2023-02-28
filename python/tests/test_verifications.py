@@ -1,7 +1,7 @@
 from uuid import uuid4
 
 from conftest import to_json
-from dataspike import Api, Verification, DocumentType, PagedResponse
+from dataspike import Api, Verification, CheckType, PagedResponse
 
 
 async def test_verification_get(aioresponses, verification, api: Api):
@@ -45,7 +45,7 @@ async def test_verification_proceed(aioresponses, api: Api):
 async def test_verification_create(aioresponses, verification, api: Api):
     aioresponses.post(f"{api.api_endpoint}/api/v3/verifications", status=201, body=to_json(verification))
     applicant_id = uuid4()
-    resp = await api.verification.create(checks=[DocumentType.Passport], applicant_id=applicant_id)
+    resp = await api.verification.create(checks=[CheckType.Passport], applicant_id=applicant_id)
     aioresponses.assert_called_once()
     assert resp == verification
 

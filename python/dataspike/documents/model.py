@@ -9,6 +9,10 @@ __all__ = ["DocumentType", "DocumentSide", "DocumentRef", "Document"]
 
 
 class DocumentType(StrEnum):
+    """
+    Generic DocumentType with and without sides
+    """
+
     Passport = "passport"
     Visa = "visa"
     IdCard = "id_card"

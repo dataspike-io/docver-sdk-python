@@ -18,6 +18,11 @@ class Documents(Resource):
         file,
         document_side: Optional[DocumentSide] = None,
     ) -> UUID:
+        """
+        Uploads document for applicant.
+        Use DocumentType with side DocumentType.IdCardFront for example
+        or pass document_side parameter.
+        """
         data = FormData()
         content_type = None
         try:

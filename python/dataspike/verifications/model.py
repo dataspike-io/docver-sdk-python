@@ -6,11 +6,36 @@ from uuid import UUID
 from datetime import datetime
 from ..documents.model import DocumentType, DocumentRef
 
-__all__ = ["Verification", "CheckStep", "CheckStatus", "VerificationStatus", "CheckError", "CheckResult", "Checks"]
+__all__ = [
+    "Verification",
+    "CheckStep",
+    "CheckStatus",
+    "VerificationStatus",
+    "CheckError",
+    "CheckResult",
+    "Checks",
+    "CheckType",
+]
+
+
+class CheckType(StrEnum):
+    """
+
+    Basically it's DocumentType without sides
+    """
+
+    Passport = "passport"
+    Visa = "visa"
+    IdCard = "id_card"
+    Liveness = "liveness_photo"
+    ResidencePermit = "residence_permit"
+    Selfie = "selfie"
+    DriverLicense = "driver_license"
+    Poa = "poa"
 
 
 class CheckStep(StrEnum):
-    Ocr = "document_cr"
+    Ocr = "document_ocr"
     FaceComparison = "face_comparison"
     Liveness = "liveness"
     Mrz = "document_mrz"

@@ -4,8 +4,7 @@ from uuid import UUID
 from aiohttp.client import _RequestContextManager
 from pydantic import validate_arguments
 
-from .model import Verification
-from ..documents.model import DocumentType
+from .model import Verification, CheckType
 from ..resource import Resource
 from ..common import PagedResponse
 
@@ -21,7 +20,7 @@ class Verifications(Resource):
 
     def _create(
         self,
-        checks: Iterable[DocumentType],
+        checks: Iterable[CheckType],
         applicant_id: Optional[UUID] = None,
     ) -> _RequestContextManager:
         body: dict[str, Any] = {"checks_required": checks}
@@ -33,7 +32,7 @@ class Verifications(Resource):
     @validate_arguments
     async def create(
         self,
-        checks: Iterable[DocumentType],
+        checks: Iterable[CheckType],
         applicant_id: Optional[UUID] = None,
     ) -> Verification:
         async with self._create(checks, applicant_id) as response:
