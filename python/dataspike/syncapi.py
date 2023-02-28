@@ -1,6 +1,5 @@
 import asyncio
 from copy import deepcopy
-from inspect import signature
 from functools import wraps
 
 from .dataspike import Api
@@ -45,10 +44,6 @@ class SyncApi:
                 if not asyncio.iscoroutinefunction(c):
                     continue
                 f = deepcopy(self.__call(m))
-                f.__signature__ = signature(m)
-                f.__doc__ = m.__doc__
-                f.__name__ = m.__name__
-                f.__annotations__ = m.__annotations__
                 setattr(holder, n, f)
 
             setattr(self, attr, holder)
