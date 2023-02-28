@@ -1,4 +1,4 @@
-from typing import Sequence, Optional
+from typing import Sequence, Optional, List
 from ..utils import StrEnum
 from pydantic.dataclasses import dataclass
 from pydantic.fields import Field
@@ -92,8 +92,8 @@ class Verification:
     checks: Optional[Checks] = Field(default=None)
     document_type: Optional[DocumentType] = Field(default=None)
     completed_at: Optional[datetime] = Field(default=None)
-    document_ids: list[UUID] = Field(default_factory=list)
-    documents: list[DocumentRef] = Field(default_factory=list)
+    document_ids: List[UUID] = Field(default_factory=list)
+    documents: List[DocumentRef] = Field(default_factory=list)
 
     @property
     def mrz_data(self) -> Optional[dict]:
