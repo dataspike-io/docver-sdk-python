@@ -29,7 +29,7 @@ classifiers = [
 ]
 [project.urls]
 Homepage = "https://dataspike.io"
-Repository = "github.com/dataspike-io/docver-sdk"
+Repository = "https://github.com/dataspike-io/docver-sdk"
 Documentation = "https://docs.dataspike.io"
 
 [tool.pdm]
