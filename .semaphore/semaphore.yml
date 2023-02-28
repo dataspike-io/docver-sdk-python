@@ -32,30 +32,12 @@ blocks:
           - pdm run ci-checks
           - test-results publish results.xml
 
-  - name: "[Python] publish"
-    run:
-      when: "tag =~ '^v\\d+\\.\\d+\\.\\d+$'"
-    task:
-      secrets:
-        - name: SDK_PYPI_TOKEN
-      env_vars:
-        - name: PDM_PUBLISH_USERNAME
-          value: __token__
-        - name: PDM_PUBLISH_PASSWORD
-          value: "$SDK_PYPI_TOKEN"
-        - name: PDM_BUILD_SCM_VERSION
-          value: "$SEMAPHORE_GIT_TAG_NAME"
-        - name: PDM_PEP517_SCM_VERSION
-          value: "$SEMAPHORE_GIT_TAG_NAME"
-      jobs:
-        - name: Publish to PYPI
-          commands:
-            - sem-version python 3.11
-            - cd python
-            - pip install pdm
-            - pdm install --no-self
-            - pdm build
-            - pdm publish
+promotions:
+  - name: "Publish to PYPI"
+    pipeline_file: "python/pypi-publish.yml"
+    auto_promote:
+      when: "result = 'passed' and tag =~ '^v\\d+\\.\\d+\\.\\d+$'"
+    
 
 after_pipeline:
   task:
