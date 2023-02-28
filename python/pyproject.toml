@@ -37,7 +37,7 @@ Documentation = "https://docs.dataspike.io"
 fmt = "black dataspike tests"
 lint = "ruff dataspike tests"
 type-check = "pyright ."
-fmt-with-checks = {shell = "black dataspike tests; ruff dataspike tests; pyright ."}
+fmt-with-checks = {shell = "black dataspike tests && ruff dataspike tests && pyright . && pytest ."}
 ci-checks = {shell = "black --check . && ruff dataspike tests && pytest --junitxml=results.xml . && pyright ."}
 
 [tool.black]

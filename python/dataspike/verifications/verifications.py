@@ -21,10 +21,10 @@ class Verifications(Resource):
 
     def _create(
         self,
-        checks_required: Iterable[DocumentType],
+        checks: Iterable[DocumentType],
         applicant_id: Optional[UUID] = None,
     ) -> _RequestContextManager:
-        body: dict[str, Any] = {"checks_required": checks_required}
+        body: dict[str, Any] = {"checks_required": checks}
         if applicant_id is not None:
             body["applicant_id"] = str(applicant_id)
 
@@ -33,10 +33,10 @@ class Verifications(Resource):
     @validate_arguments
     async def create(
         self,
-        checks_required: Iterable[DocumentType],
+        checks: Iterable[DocumentType],
         applicant_id: Optional[UUID] = None,
     ) -> Verification:
-        async with self._create(checks_required, applicant_id) as response:
+        async with self._create(checks, applicant_id) as response:
             await self._validate_resp(response, [201], "create verification")
             data = await response.json()
 

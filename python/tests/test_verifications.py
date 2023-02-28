@@ -45,7 +45,7 @@ async def test_verification_proceed(aioresponses, api: Api):
 async def test_verification_create(aioresponses, verification, api: Api):
     aioresponses.post(f"{api.api_endpoint}/api/v3/verifications", status=201, body=to_json(verification))
     applicant_id = uuid4()
-    resp = await api.verification.create(checks_required=[DocumentType.Passport], applicant_id=applicant_id)
+    resp = await api.verification.create(checks=[DocumentType.Passport], applicant_id=applicant_id)
     aioresponses.assert_called_once()
     assert resp == verification
 
