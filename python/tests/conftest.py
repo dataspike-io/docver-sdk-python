@@ -45,6 +45,12 @@ async def api():
         yield client
 
 
+@pytest.fixture
+def syncapi():
+    with SyncApi("token_sync") as client:
+        yield client
+
+
 def pytest_collection_modifyitems(config, items):
     for item in items:
         if asyncio.iscoroutinefunction(item.function):

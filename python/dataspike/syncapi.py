@@ -10,7 +10,10 @@ __all__ = ["SyncApi"]
 
 
 class SyncApi:
-    async def __init_api(self, *args, **kwargs):
+    __slots__ = ["applicant", "verification", "document", "aml", "sdk", "__loop", "__api"]
+
+    @staticmethod
+    async def __init_api(*args, **kwargs):
         return Api(*args, **kwargs)
 
     def __run(self, fn):
