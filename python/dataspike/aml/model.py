@@ -7,11 +7,12 @@ from ..utils import StrEnum
 
 __all__ = [
     "EntityTag",
-    "EntityTagStrict",
+    "EntityTagStr",
     "EntityType",
     "EntityName",
     "EntityInfo",
     "DataSource",
+    "DataSourceStr",
     "DateRange",
     "RiskScore",
     "AMLSearchRequest",
@@ -27,6 +28,7 @@ __all__ = [
     "PoliticalRole",
     "Occupation",
     "Gender",
+    "CountryAlpha2",
 ]
 
 CountryAlpha2 = str
@@ -39,7 +41,7 @@ class EntityType(StrEnum):
     Aircraft = "Aircraft"
 
 
-class EntityTagStrict(StrEnum):
+class EntityTag(StrEnum):
     Unknown = "Unknown"
     Sanctions = "Sanctions"
     Criminal = "Criminal"
@@ -55,7 +57,7 @@ class EntityTagStrict(StrEnum):
         return value
 
 
-EntityTag = Union[EntityTagStrict, str]
+EntityTagStr = Union[EntityTag, str]
 
 
 class DataSource(StrEnum):
@@ -139,6 +141,9 @@ class DataSource(StrEnum):
         return value
 
 
+DataSourceStr = Union[DataSource, str]
+
+
 @dataclass
 class DateRange:
     gte: Optional[str] = Field(default=None)
@@ -160,8 +165,8 @@ class AMLSearchRequest:
     entity_types: Optional[list[EntityType]] = Field(default=None)
     postal_codes: Optional[list[str]] = Field(default=None)
     date_of_birth: Optional[DateRange] = Field(default=None)
-    tags: Optional[list[EntityTag]] = Field(default=None)
-    sources: Optional[list[Union[DataSource, str]]] = Field(default=None)
+    tags: Optional[list[EntityTagStr]] = Field(default=None)
+    sources: Optional[list[DataSourceStr]] = Field(default=None)
     registration_ids: Optional[list[str]] = Field(default=None)
 
 
@@ -175,13 +180,13 @@ class EntityName:
 
 @dataclass
 class SourceData:
-    source_id: Union[DataSource, str]
+    source_id: DataSourceStr
     name: str
     reason: Optional[str] = Field(default=None)
     summary: Optional[str] = Field(default=None)
     source_url: Optional[str] = Field(default=None)
     risk_score: Optional[RiskScore] = Field(default=None)
-    tags: Optional[list[EntityTag]] = Field(default=None)  # re-check this
+    tags: Optional[list[EntityTagStr]] = Field(default=None)  # re-check this
 
 
 @dataclass
@@ -280,7 +285,7 @@ class AMLEntity:
     type: EntityType
     risk_score: RiskScore
     fields: EntityFields
-    tags: Optional[list[EntityTag]] = Field(default=None)
+    tags: Optional[list[EntityTagStr]] = Field(default=None)
     annotation: Optional[str] = Field(default=None)
 
 
