@@ -86,7 +86,7 @@ write_to = "dataspike/VERSION"
 
 
 [tool.pdm.build]
-excludes = ["./**/.git"]
+excludes = ["./**/.git", './**/.*']
 package-dir = "."
 includes = ["dataspike"]
 source-includes = ["tests", "README.md"]
