@@ -46,9 +46,6 @@ class SyncApi:
                     continue
                 f = deepcopy(self.__call(m))
                 f.__signature__ = signature(m)
-                f.__doc__ = m.__doc__
-                f.__name__ = m.__name__
-                f.__annotations__ = m.__annotations__
                 setattr(holder, n, f)
 
             setattr(self, attr, holder)
