@@ -14,16 +14,21 @@ class Applicants(Resource):
     def _get(self, applicant_id: UUID) -> _RequestContextManager:
         return self._session.get(url=f"{self._api_endpoint}/api/v3/applicants/{applicant_id}")
 
+    def _get_by_external_id(self, external_id: str) -> _RequestContextManager:
+        return self._session.get(url=f"{self._api_endpoint}/api/v3/applicants/by_external_id/{external_id}")
+
     @validate_arguments
-    async def get(self, applicant_id: UUID) -> Applicant:
+    async def get(self, applicant_id: UUID) -> Optional[Applicant]:
         async with self._get(applicant_id) as response:
+            if response.status == 404:
+                return None
             await self._validate_resp(response, [200], "get applicant")
             data = await response.json()
         return Applicant(**data)
 
     @validate_arguments
-    async def find(self, applicant_id: UUID) -> Optional[Applicant]:
-        async with self._get(applicant_id) as response:
+    async def get_by_external_id(self, external_id: str) -> Optional[Applicant]:
+        async with self._get_by_external_id(external_id) as response:
             if response.status == 404:
                 return None
             await self._validate_resp(response, [200], "get applicant")
