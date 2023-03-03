@@ -16,25 +16,28 @@ async def test_applicant_get(aioresponses, api: Api):
     assert got == applicant
 
 
-async def test_applicant_find(aioresponses, api: Api):
-    applicant_id = UUID(int=21355515246424524622342344623421465345)
-    applicant = Applicant(applicant_id=applicant_id, display_info=ApplicantInfo(full_name="John Doe"))
-    body = to_json(applicant)
-
-    aioresponses.get(f"https://api.dataspike.io/api/v3/applicants/{applicant_id}", body=body)
-
-    got = await api.applicant.find(applicant_id)
-    aioresponses.assert_called_once()
-    assert got == applicant
-
-
-async def test_applicant_find_return_none(aioresponses, api: Api):
+async def test_applicant_get_return_none(aioresponses, api: Api):
     applicant_id = UUID(int=21355515246424524622342344623421465345)
     aioresponses.get(f"https://api.dataspike.io/api/v3/applicants/{applicant_id}", status=404)
 
-    got = await api.applicant.find(applicant_id)
+    got = await api.applicant.get(applicant_id)
     aioresponses.assert_called_once()
     assert got is None
+
+
+async def test_applicant_get_by_external_id(aioresponses, api: Api):
+    applicant_id = UUID(int=21355515246424524622342344623421465345)
+    external_id = "asd1"
+    applicant = Applicant(
+        applicant_id=applicant_id, external_id=external_id, display_info=ApplicantInfo(full_name="John Doe")
+    )
+    body = to_json(applicant)
+
+    aioresponses.get(f"https://api.dataspike.io/api/v3/applicants/by_external_id/{external_id}", body=body)
+
+    got = await api.applicant.get_by_external_id(external_id)
+    aioresponses.assert_called_once()
+    assert got == applicant
 
 
 async def test_applicant_create(aioresponses, api: Api):
