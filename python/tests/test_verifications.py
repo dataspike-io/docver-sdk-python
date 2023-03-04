@@ -9,27 +9,17 @@ async def test_verification_get(aioresponses, verification, api: Api):
 
     aioresponses.get(f"{api.api_endpoint}/api/v3/verifications/{verification.id}", body=body)
 
-    got: Verification = await api.verification.get(verification.id)
+    got = await api.verification.get(verification.id)
     aioresponses.assert_called_once()
     assert got == verification
 
 
-async def test_verification_find(aioresponses, verification, api: Api):
-    body = to_json(verification)
-
-    aioresponses.get(f"{api.api_endpoint}/api/v3/verifications/{verification.id}", body=body)
-
-    got = await api.verification.find(verification.id)
-    aioresponses.assert_called_once()
-    assert got == verification
-
-
-async def test_verification_find_returns_none(aioresponses, api: Api):
+async def test_verification_get_returns_none(aioresponses, api: Api):
     vid = uuid4()
 
     aioresponses.get(f"{api.api_endpoint}/api/v3/verifications/{vid}", status=404)
 
-    got = await api.verification.find(vid)
+    got = await api.verification.get(vid)
     aioresponses.assert_called_once()
     assert got is None
 
