@@ -45,14 +45,7 @@ class Verifications(Resource):
         return self._session.get(url=f"{self._api_endpoint}/api/v3/verifications/{verification_id}")
 
     @validate_arguments
-    async def get(self, verification_id: UUID) -> Verification:
-        async with self._get(verification_id) as response:
-            await self._validate_resp(response, [200], "get verification")
-            data = await response.json()
-            return Verification(**data)
-
-    @validate_arguments
-    async def find(self, verification_id: UUID) -> Optional[Verification]:
+    async def get(self, verification_id: UUID) -> Optional[Verification]:
         async with self._get(verification_id) as response:
             await self._validate_resp(response, [200, 404], "find verification")
             if response.status == 404:

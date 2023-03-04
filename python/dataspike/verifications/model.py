@@ -79,6 +79,9 @@ class Checks:
     document_mrz: Optional[CheckResult] = Field(default=None)
     poa: Optional[CheckResult] = Field(default=None)
 
+    def all_checks(self) -> List[CheckResult]:
+        return list(filter(None, [self.document_mrz, self.document_ocr, self.face_comparison, self.liveness, self.poa]))
+
 
 @dataclass
 class Verification:
