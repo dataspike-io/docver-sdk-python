@@ -24,5 +24,7 @@ class DataspikeJsonEncoder(json.JSONEncoder):
             return {"data": list(obj.data), "has_next": obj.has_next}
         elif dataclasses.is_dataclass(obj) and not isinstance(obj, type):
             return dataclasses.asdict(obj)
+        elif hasattr(obj, "__iter__"):
+            return list(obj)  # type: ignore[attr-defined] # wait when pyright will be smarter
         else:
             return super().default(obj)

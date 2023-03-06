@@ -1,4 +1,4 @@
-from typing import Sequence, Optional, List
+from typing import Sequence, Optional, List, Tuple
 from ..utils import StrEnum
 from pydantic.dataclasses import dataclass
 from pydantic.fields import Field
@@ -78,6 +78,20 @@ class Checks:
     liveness: Optional[CheckResult] = Field(default=None)
     document_mrz: Optional[CheckResult] = Field(default=None)
     poa: Optional[CheckResult] = Field(default=None)
+
+    def non_empty_checks(self) -> List[Tuple[str, CheckResult]]:
+        return list(  # type: ignore[general-type]
+            filter(
+                lambda x: x[1] is not None,
+                [
+                    ("document_mrz", self.document_mrz),
+                    ("document_ocr", self.document_ocr),
+                    ("face_comparison", self.face_comparison),
+                    ("liveness", self.liveness),
+                    ("poa", self.poa),
+                ],
+            )
+        )
 
 
 @dataclass
