@@ -19,10 +19,7 @@ class DocumentType(StrEnum):
     IdCardFront = "id_card_front"
     IdCardBack = "id_card_back"
     Liveness = "liveness_photo"
-    LivenessUp = "liveness_photo_up"
-    LivenessDown = "liveness_photo_down"
-    LivenessRight = "liveness_photo_right"
-    LivenessLeft = "liveness_photo_left"
+    LivenessExtra = "liveness_photo_extra"
     ResidencePermit = "residence_permit"
     ResidencePermitFront = "residence_permit_front"
     ResidencePermitBack = "residence_permit_back"
@@ -39,10 +36,6 @@ class DocumentType(StrEnum):
 class DocumentSide(StrEnum):
     Front = "front"
     Back = "back"
-    Left = "left"
-    Up = "up"
-    Right = "right"
-    Down = "down"
 
 
 @dataclass
