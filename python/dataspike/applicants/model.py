@@ -30,7 +30,7 @@ class ApplicantVerificationStatus(StrEnum):
 @dataclass
 class Applicant:
     applicant_id: UUID
-    display_info: ApplicantInfo
+    system_info: ApplicantInfo
     verification_status: ApplicantVerificationStatus = Field(default="initial")
     provided_info: Optional[ApplicantInfo] = Field(default=None)
     external_id: Optional[str] = Field(default=None)
