@@ -6,7 +6,7 @@ from dataspike import Applicant, ApplicantInfo, Api, PagedResponse
 
 async def test_applicant_get(aioresponses, api: Api):
     applicant_id = UUID(int=21355515246424524622342344623421465345)
-    applicant = Applicant(applicant_id=applicant_id, display_info=ApplicantInfo(full_name="John Doe"))
+    applicant = Applicant(applicant_id=applicant_id, system_info=ApplicantInfo(full_name="John Doe"))
     body = to_json(applicant)
 
     aioresponses.get(f"https://api.dataspike.io/api/v3/applicants/{applicant_id}", body=body)
@@ -29,7 +29,7 @@ async def test_applicant_get_by_external_id(aioresponses, api: Api):
     applicant_id = UUID(int=21355515246424524622342344623421465345)
     external_id = "asd1"
     applicant = Applicant(
-        applicant_id=applicant_id, external_id=external_id, display_info=ApplicantInfo(full_name="John Doe")
+        applicant_id=applicant_id, external_id=external_id, system_info=ApplicantInfo(full_name="John Doe")
     )
     body = to_json(applicant)
 
@@ -53,7 +53,7 @@ async def test_applicant_create(aioresponses, api: Api):
 
 async def test_applicant_list(aioresponses, api: Api):
     applicant_id = UUID(int=21355515246424524467342344623421465345)
-    applicant = Applicant(applicant_id=applicant_id, display_info=ApplicantInfo(full_name="John Doe"))
+    applicant = Applicant(applicant_id=applicant_id, system_info=ApplicantInfo(full_name="John Doe"))
     data = PagedResponse[Applicant](data=[applicant], has_next=False)
     aioresponses.get(
         r"https://api.dataspike.io/api/v3/applicants?page=0&limit=10",
