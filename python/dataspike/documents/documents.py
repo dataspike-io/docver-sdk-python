@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 from uuid import UUID
 import filetype
 
@@ -10,10 +10,9 @@ from ..resource import Resource
 
 
 class Documents(Resource):
-    @validate_arguments
-    async def upload(
+    async def _upload(
         self,
-        applicant_id: UUID,
+        upload_to: Union[UUID, str],
         document_type: DocumentType,
         file,
         document_side: Optional[DocumentSide] = None,
@@ -36,10 +35,39 @@ class Documents(Resource):
         data.add_field("document_type", document_type)
         if document_side:
             data.add_field("side", document_side)
-        async with self._session.post(url=f"{self._api_endpoint}/api/v3/upload/{applicant_id}", data=data) as response:
+        async with self._session.post(url=f"{self._api_endpoint}/api/v3/upload/{upload_to}", data=data) as response:
             await self._validate_resp(response, [200, 201], "upload document")
             data = await response.json()
             return UUID(data["document_id"])
+
+    @validate_arguments
+    async def upload(
+        self,
+        applicant_id: UUID,
+        document_type: DocumentType,
+        file,
+        document_side: Optional[DocumentSide] = None,
+    ) -> UUID:
+        """
+        Uploads document for applicant.
+        Use DocumentType with side DocumentType.IdCardFront for example
+        or pass document_side parameter.
+        """
+        return await self._upload(applicant_id, document_type, file, document_side)
+
+    @validate_arguments
+    async def _sdk_upload(
+        self,
+        document_type: DocumentType,
+        file,
+        document_side: Optional[DocumentSide] = None,
+    ) -> UUID:
+        """
+        Uploads document for applicant using sdk token.
+        Use DocumentType with side DocumentType.IdCardFront for example
+        or pass document_side parameter.
+        """
+        return await self._upload("sdk", document_type, file, document_side)
 
     @staticmethod
     async def __get_document(response: ClientResponse) -> Document:
