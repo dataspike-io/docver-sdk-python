@@ -7,7 +7,7 @@ authors = [
 ]
 dependencies = [
     "pydantic>=1.10.5",
-    "aiohttp[speedups]>=3.8.4",
+    "aiohttp>=3.8.4",
     "filetype>=1.2.0",
 ]
 requires-python = ">=3.8"
