@@ -32,6 +32,9 @@ class CheckType(StrEnum):
     Selfie = "selfie"
     DriverLicense = "driver_license"
     Poa = "poa"
+    PoaUtilityBill = "poa_utility_bill"
+    PoaBankStatement = "poa_bank_statement"
+    PoaResidenceRegistration = "poa_residence_registration"
 
 
 class CheckStep(StrEnum):
