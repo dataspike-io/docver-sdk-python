@@ -115,7 +115,6 @@ class Verification:
     verification_url_id: Optional[str] = Field(default=None)
     verification_url: Optional[str] = Field(default=None)
 
-
     @property
     def mrz_data(self) -> Optional[dict]:
         if self.checks and self.checks.document_mrz:
