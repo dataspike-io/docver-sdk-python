@@ -111,6 +111,10 @@ class Verification:
     completed_at: Optional[datetime] = Field(default=None)
     document_ids: List[UUID] = Field(default_factory=list)
     documents: List[DocumentRef] = Field(default_factory=list)
+    expires_at: Optional[datetime] = Field(default=None)
+    verification_url_id: Optional[str] = Field(default=None)
+    verification_url: Optional[str] = Field(default=None)
+
 
     @property
     def mrz_data(self) -> Optional[dict]:
