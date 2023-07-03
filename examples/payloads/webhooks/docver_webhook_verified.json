@@ -1,0 +1,61 @@
+{
+    "id": "ef12baa7-23bb-442b-be2f-bb3b796c03b0",
+    "webhook_id": "8c8e7195-f176-4279-bf46-98eed9acdb35",
+    "event_type": "DOCVER",
+    "timestamp": "2023-06-19T09:29:11.590324Z",
+    "payload": {
+      "id": "eb94d5a4-5515-49f9-8f10-d9ab35224c71",
+      "organization_id": "org_asdasf",
+      "account_id": null,
+      "account_email": null,
+      "applicant_id": "dd39c641-84d8-4f75-8307-37b70c100768",
+      "status": "verified",
+      "document_type": "passport",
+      "checks": {
+        "face_comparison": {
+          "status": "verified",
+          "errors": [],
+          "pending_documents": [],
+          "data": null
+        },
+        "document_mrz": {
+          "status": "verified",
+          "errors": [],
+          "pending_documents": [],
+          "data": {
+            "document_type": "P",
+            "country": "ZWE",
+            "name": "JOHN",
+            "surname": "DOE",
+            "doc_number": "111111111",
+            "nationality": "ZWE",
+            "birth_date": "910313",
+            "sex": "M",
+            "expiry_date": "280628"
+          }
+        }
+      },
+      "aml_search_id": "60f5468f-d22a-4c0c-9d44-9c3cbb28f4cb",
+      "created_at": "2023-06-19T09:29:11.590324Z",
+      "completed_at": "2023-06-19T09:29:18.589913Z",
+      "document_ids": [
+        "363e89ee-ceac-4ed6-93be-634d4d69c265",
+        "900cc372-3664-4255-b1f1-9fec4489497a"
+      ],
+      "documents": [
+        {
+          "document_id": "363e89ee-ceac-4ed6-93be-634d4d69c265",
+          "document_type": "passport",
+          "content_type": "image/jpeg"
+        },
+        {
+          "document_id": "900cc372-3664-4255-b1f1-9fec4489497a",
+          "document_type": "selfie",
+          "content_type": "image/jpeg"
+        }
+      ],
+      "verification_url": "https://am.dataspike.io/V111BBB013311111",
+      "verification_url_id": "V111BBB013311111",
+      "expires_at": "2023-06-19T11:29:11.590325Z"
+    }
+  }
