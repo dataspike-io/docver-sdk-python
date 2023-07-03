@@ -1,0 +1,32 @@
+{
+  "id": "ef12baa7-23bb-442b-be2f-bb3b796c03b0",
+  "webhook_id": "8c8e7195-f176-4279-bf46-98eed9acdb35",
+  "event_type": "AML_SCREENING",
+  "timestamp": "2023-06-19T09:29:11.590324Z",
+  "payload": {
+    "screening_id": "eb577f33-38b9-4b40-85d5-0d60eff18fd2",
+    "applicant_id": "c17f48fa-dfc7-4f20-9c3f-97f6c0a4498f",
+    "search_request": {
+      "full_name": "JOHN DOE",
+      "countries": [
+        "GB"
+      ],
+      "date_of_birth": {
+        "gte": "1984-01-01",
+        "lte": "1984-01-01"
+      },
+      "entity_types": [
+        "Person"
+      ]
+    },
+    "search_result": {
+      "requested_name": "JOHN DOE",
+      "search_uuid": "616adf2b-5ae1-4f43-ab65-f43fb32a6dc3",
+      "data": []
+    },
+    "risk_score": {
+      "type": "Low"
+    },
+    "completed_at": "2023-07-01T01:24:17.380971021Z"
+  }
+}
