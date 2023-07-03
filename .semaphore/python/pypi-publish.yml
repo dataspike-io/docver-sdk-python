@@ -5,8 +5,6 @@ agent:
     type: e1-standard-2
     os_image: ubuntu2004
 global_job_config:
-  secrets:
-    - name: READ_REPO_ACCESS
   env_vars:
     - name: PDM_IGNORE_SAVED_PYTHON
       value: "1"
