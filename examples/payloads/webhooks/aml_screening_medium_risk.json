@@ -1,0 +1,301 @@
+{
+  "id": "ef12baa7-23bb-442b-be2f-bb3b796c03b0",
+  "webhook_id": "8c8e7195-f176-4279-bf46-98eed9acdb35",
+  "event_type": "AML_SCREENING",
+  "timestamp": "2023-06-19T09:29:11.590324Z",
+  "payload": {
+    "screening_id": "3ff03ecd-fb3c-4a60-8491-870152eb4c13",
+    "applicant_id": "528aed18-b568-44b0-9829-1b7fc9026e8e",
+    "search_request": {
+      "full_name": "abc abc",
+      "countries": [
+        "AT"
+      ],
+      "entity_types": [
+        "Person"
+      ]
+    },
+    "search_result": {
+      "requested_name": "abc abc",
+      "search_uuid": "a4dac0fc-495b-4a1b-8712-4f1a0231260e",
+      "max_risk_score": "Medium",
+      "data": [
+        {
+          "uuid": "21467660-1f40-4296-89f0-7c39e7db566b",
+          "type": "Organization",
+          "annotation": "(also FIRST AMERICAN HEALTH CARE OF GEORGIA, INC.)",
+          "tags": [
+            "Debarred",
+            "Media"
+          ],
+          "risk_score": "Medium",
+          "fields": {
+            "names": [
+              {
+                "full_name": "ABC"
+              }
+            ],
+            "sources": [
+              {
+                "source_id": "US_SAM_EXCLUSIONS",
+                "name": "US SAM Procurement Exclusions",
+                "source_url": "https://sam.gov/data-services/Exclusions/Public%20V2?privacy=Public",
+                "risk_score": "Medium",
+                "tags": [
+                  "Debarred"
+                ]
+              },
+              {
+                "source_id": "US_SAM_EXCLUSIONS",
+                "name": "US SAM Procurement Exclusions",
+                "summary": "Excluded by the Department of Health and Human Services from participation in all Federal health care programs pursuant to 42 U.S.C. § 1320a-7 or other sections of the Social Security Act, as amended and codified in Chapter 7 of Title 42 of the United States Code (the scope and effect of Federal health care program exclusions is described in 42 C.F.R. § 1001.1901).",
+                "source_url": "https://sam.gov/data-services/Exclusions/Public%20V2?privacy=Public",
+                "risk_score": "Medium",
+                "tags": [
+                  "Debarred"
+                ]
+              }
+            ],
+            "media": [
+              {
+                "source_name": "ABC News (AU)",
+                "source_url": "https://www.abc.net.au/news/2023-02-15/how-child-protection-failed-darcey-and-chloe-conley/101963634",
+                "headline": "Weeks before Darcey and Chloe died in a hot car, child safety was warned they were at risk. Why didn't it intervene?",
+                "published_at": 1676397261,
+                "risk_score": "Low",
+                "tags": [
+                  "Media"
+                ]
+              },
+              {
+                "source_name": "The Daily Caller",
+                "source_url": "https://dailycaller.com/2023/01/03/dax-tejera-veronica-reportedly-charged-crime-children-nypd/",
+                "headline": "Police Reportedly Charge Wife Of Late TV Producer Dax Tejera With Crime Hours After Husband’s Death",
+                "published_at": 1672758425,
+                "risk_score": "Low",
+                "tags": [
+                  "Media"
+                ]
+              },
+              {
+                "source_name": "Raw Story",
+                "source_url": "https://www.rawstory.com/kellyanne-conway-jan-6-2658790856/",
+                "headline": "Watch: Kellyanne Conway blows off reporters as she goes to speak with January 6 Committee",
+                "published_at": 1669651513,
+                "risk_score": "Low",
+                "tags": [
+                  "Media"
+                ]
+              },
+              {
+                "source_name": "Reuters",
+                "source_url": "https://www.reuters.com/world/asia-pacific/australian-held-myanmar-pleads-not-guilty-closed-court-media-2022-08-12/",
+                "headline": "Australian held in Myanmar pleads not guilty in closed court - media - Reuters",
+                "published_at": 1660279020,
+                "risk_score": "Low",
+                "tags": [
+                  "Media"
+                ]
+              },
+              {
+                "source_name": "RealClearPolitics",
+                "source_url": "https://www.realclearpolitics.com/video/2021/05/23/george_will_id_like_to_see_january_6_burned_into_the_american_mind_as_firmly_as_911.html",
+                "headline": "George Will: \"I'd Like To See January 6 Burned Into The American Mind As Firmly As 9/11\"",
+                "published_at": 1621781307,
+                "risk_score": "Low",
+                "tags": [
+                  "Media"
+                ]
+              },
+              {
+                "source_name": "ABC News",
+                "source_url": "https://abcnews.go.com/Politics/operation-warp-speed-adviser-concerned-vaccine-skepticism-exacerbated/story?id=74336972",
+                "headline": "Vaccine adviser concerned about skepticism 'exacerbated' by 'political context'",
+                "published_at": 1606056357,
+                "risk_score": "Low",
+                "tags": [
+                  "Media"
+                ]
+              },
+              {
+                "source_name": "Reuters",
+                "source_url": "https://www.reuters.com/article/us-health-coronavirus-usa-carson-idUSKBN27P2AE",
+                "headline": "U.S. housing secretary Carson tests positive for COVID-19: report - Reuters",
+                "published_at": 1604940600,
+                "risk_score": "Low",
+                "tags": [
+                  "Media"
+                ]
+              },
+              {
+                "source_name": "HuffPost",
+                "source_url": "https://www.huffpost.com/entry/george-stephanopoulos-kristi-noem-election-fraud_n_5fa9235bc5b67c3259b107c6",
+                "headline": "George Stephanopoulos Slaps Down South Dakota Gov’s Election Fraud Claims",
+                "published_at": 1604927944,
+                "risk_score": "Low",
+                "tags": [
+                  "Media"
+                ]
+              },
+              {
+                "source_name": "Thegatewaypundit.com",
+                "source_url": "https://www.thegatewaypundit.com/2020/10/wow-fact-checkers-rule-joe-biden-not-call-young-black-men-super-predators-called-young-black-men-predators-beyond-pale-antisocial-sociopaths/",
+                "headline": "WOW! Fact Checkers Rule Joe Biden Did Not Call Young Black Men “Super Predators” – He Called Young Black Men “Predators – Beyond the Pale – Antisocial and Sociopaths”",
+                "published_at": 1602880660,
+                "risk_score": "Low",
+                "tags": [
+                  "Media"
+                ]
+              },
+              {
+                "source_name": "Raw Story",
+                "source_url": "https://www.rawstory.com/2020/09/abc-host-demands-surrogate-explain-why-biden-didnt-stop-the-even-though-trump-was-in-office/",
+                "headline": "ABC host demands surrogate explain why Biden didn’t stop the pandemic even though Trump was in office",
+                "published_at": 1600007492,
+                "risk_score": "Low",
+                "tags": [
+                  "Media"
+                ]
+              }
+            ]
+          },
+          "importance_score": 0.3631891072156308
+        },
+        {
+          "uuid": "aa7089d5-cea7-4fb1-904c-36aed1d1dcf7",
+          "type": "Organization",
+          "tags": [
+            "Debarred"
+          ],
+          "risk_score": "Medium",
+          "fields": {
+            "names": [
+              {
+                "full_name": "ABC DIAGNOSTIC"
+              }
+            ],
+            "sources": [
+              {
+                "source_id": "US_SAM_EXCLUSIONS",
+                "name": "US SAM Procurement Exclusions",
+                "source_url": "https://sam.gov/data-services/Exclusions/Public%20V2?privacy=Public",
+                "risk_score": "Medium",
+                "tags": [
+                  "Debarred"
+                ]
+              },
+              {
+                "source_id": "US_SAM_EXCLUSIONS",
+                "name": "US SAM Procurement Exclusions",
+                "summary": "Excluded by the Department of Health and Human Services from participation in all Federal health care programs pursuant to 42 U.S.C. § 1320a-7 or other sections of the Social Security Act, as amended and codified in Chapter 7 of Title 42 of the United States Code (the scope and effect of Federal health care program exclusions is described in 42 C.F.R. § 1001.1901).",
+                "source_url": "https://sam.gov/data-services/Exclusions/Public%20V2?privacy=Public",
+                "risk_score": "Medium",
+                "tags": [
+                  "Debarred"
+                ]
+              }
+            ]
+          },
+          "importance_score": 0.3631891072156308
+        },
+        {
+          "uuid": "22643e40-d2b1-426d-8a19-c5c81eeb0ac6",
+          "type": "Organization",
+          "annotation": "(also RAN-TI REALTY CORP., FER-RAN REALTY CORP., 504 WEST 171ST STREET REALTY CORP., 256 EQUITIES, INC., S AND J MANAGEMENT, F AND J MANAGEMENT, 474 WEST 150TH STREET REALTY CORP., 551 WEST 157TH STREET REALTY CORP., MIMI REAL ESTATE, CORP., 533 WEST 142ND STREET REALTY CORP., 623 WEST 136TH STREET REALTY CORP., J AND F FERRANTI, 522-36 WEST 147TH STREET REALTY CORP, GWYNNE PROPERTIES, LTD., 145TH STREET REALTY COMPANY, 629 WEST 135TH STREET REALTY CORP., 368 CONVENT PROPERTIES, LTD., MSCT REALTY CORP., 458 WEST 143RD STREET REALTY CORP., 454 WEST 146TH STREET REALTY CORP., 560 WEST 144TH STREET REALTY, INC., EXECUTIVE HOME LEASING CO., CARMEN GONZALEZ, LTD., JACK FERRANTI, WILLIAM PALMER)",
+          "tags": [
+            "Debarred"
+          ],
+          "risk_score": "Medium",
+          "fields": {
+            "names": [
+              {
+                "full_name": "ABC TIME CORP."
+              }
+            ],
+            "sources": [
+              {
+                "source_id": "US_SAM_EXCLUSIONS",
+                "name": "US SAM Procurement Exclusions",
+                "source_url": "https://sam.gov/data-services/Exclusions/Public%20V2?privacy=Public",
+                "risk_score": "Medium",
+                "tags": [
+                  "Debarred"
+                ]
+              }
+            ]
+          },
+          "importance_score": 0.3631891072156308
+        },
+        {
+          "uuid": "cc633511-2787-4e9d-a731-56e621805f1c",
+          "type": "Organization",
+          "tags": [
+            "Debarred"
+          ],
+          "risk_score": "Medium",
+          "fields": {
+            "names": [
+              {
+                "full_name": "ABC EUREKA MEDICAL RENTALS"
+              }
+            ],
+            "sources": [
+              {
+                "source_id": "US_SAM_EXCLUSIONS",
+                "name": "US SAM Procurement Exclusions",
+                "source_url": "https://sam.gov/data-services/Exclusions/Public%20V2?privacy=Public",
+                "risk_score": "Medium",
+                "tags": [
+                  "Debarred"
+                ]
+              },
+              {
+                "source_id": "US_SAM_EXCLUSIONS",
+                "name": "US SAM Procurement Exclusions",
+                "summary": "Excluded by the Department of Health and Human Services from participation in all Federal health care programs pursuant to 42 U.S.C. § 1320a-7 or other sections of the Social Security Act, as amended and codified in Chapter 7 of Title 42 of the United States Code (the scope and effect of Federal health care program exclusions is described in 42 C.F.R. § 1001.1901).",
+                "source_url": "https://sam.gov/data-services/Exclusions/Public%20V2?privacy=Public",
+                "risk_score": "Medium",
+                "tags": [
+                  "Debarred"
+                ]
+              }
+            ]
+          },
+          "importance_score": 0.3631891072156308
+        },
+        {
+          "uuid": "4c0a46e7-1691-439a-bee6-e3b5c9bcbf47",
+          "type": "Organization",
+          "annotation": "(also DAVID COYNE)",
+          "tags": [
+            "Debarred"
+          ],
+          "risk_score": "Medium",
+          "fields": {
+            "names": [
+              {
+                "full_name": "ABCO CONTRACTING LLC"
+              }
+            ],
+            "sources": [
+              {
+                "source_id": "US_SAM_EXCLUSIONS",
+                "name": "US SAM Procurement Exclusions",
+                "source_url": "https://sam.gov/data-services/Exclusions/Public%20V2?privacy=Public",
+                "risk_score": "Medium",
+                "tags": [
+                  "Debarred"
+                ]
+              }
+            ]
+          },
+          "importance_score": 0.3631891072156308
+        }
+      ]
+    },
+    "risk_score": {
+      "type": "Medium"
+    },
+    "completed_at": "2023-06-29T13:28:34.786987817Z"
+  }
+}
