@@ -1,0 +1,74 @@
+{
+  "id": "ef12baa7-23bb-442b-be2f-bb3b796c03b0",
+  "webhook_id": "8c8e7195-f176-4279-bf46-98eed9acdb35",
+  "event_type": "DOCVER",
+  "timestamp": "2023-06-19T09:29:11.590324Z",
+  "payload": {
+    "id": "46f67eb6-1486-49f5-95cd-69313e392f35",
+    "organization_id": "org_asdasd",
+    "account_id": "acc_asdasd",
+    "account_email": "org@org.com",
+    "applicant_id": "08c0091e-dd28-4c35-9d8f-5c4194e71fc3",
+    "status": "failed",
+    "document_type": "passport",
+    "checks": {
+      "face_comparison": {
+        "status": "failed",
+        "errors": [
+          {
+            "code": 7002,
+            "message": "cross check duplicate found by photo"
+          }
+        ],
+        "pending_documents": [],
+        "data": null
+      },
+      "document_mrz": {
+        "status": "failed",
+        "errors": [
+          {
+            "code": 7000,
+            "message": "cross check duplicate found by doc number"
+          }
+        ],
+        "pending_documents": [],
+        "data": {
+          "document_type": "P",
+          "doc_number": "151341341",
+          "name": "JOHN",
+          "surname": "DOE",
+          "country": "ZWE",
+          "nationality": "ZWE",
+          "sex": "M",
+          "birth_date": "880321",
+          "expiry_date": "320119"
+        }
+      }
+    },
+    "aml_search_id": "cfd18486-ac31-4b8b-9cb9-1391394c6623",
+    "created_at": "2023-07-03T01:05:17.889607Z",
+    "completed_at": "2023-07-03T01:07:03.575890Z",
+    "document_ids": [
+      "60d44cfa-f960-4407-b575-24174f1765f6",
+      "b93b1ad8-8c64-4b6d-b126-1d45041595e8"
+    ],
+    "documents": [
+      {
+        "document_id": "60d44cfa-f960-4407-b575-24174f1765f6",
+        "document_type": "passport",
+        "content_type": "image/jpeg"
+      },
+      {
+        "document_id": "b93b1ad8-8c64-4b6d-b126-1d45041595e8",
+        "document_type": "selfie",
+        "content_type": "image/jpeg"
+      }
+    ],
+    "duplicated_applicant_ids": [
+      "2239971a-6268-4a47-8fba-9d92fd0370ba"
+    ],
+    "verification_url": "https://am.dataspike.dev/V111BBB013311111",
+    "verification_url_id": "V111BBB013311111",
+    "expires_at": "2023-07-03T03:05:17.889608Z"
+  }
+}
