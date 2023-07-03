@@ -6,7 +6,6 @@ from aiohttp import ClientSession
 
 from .applicants.applicants import Applicants
 from .documents.documents import Documents
-from .sdk.sdk import Sdk
 from .verifications.verifications import Verifications
 from .aml.aml import AML
 from .utils import DataspikeJsonEncoder
@@ -38,7 +37,6 @@ class Api:
         self.verification = Verifications(self._session, api_endpoint)
         self.document = Documents(self._session, api_endpoint)
         self.aml = AML(self._session, api_endpoint)
-        self.sdk = Sdk(self._session, api_endpoint)
 
     def __repr__(self) -> str:
         return f"DataspikeApi<{self.api_endpoint}>"
