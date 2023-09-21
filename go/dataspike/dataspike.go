@@ -7,22 +7,26 @@ import (
 	"io"
 	"mime/multipart"
 	"net/http"
+
+	"github.com/gofrs/uuid"
 )
 
 const tokenHeader = "ds-api-token"
 
 type IDataspikeClient interface {
-	GetVerificationByID(string) (*Verification, error)
+	GetVerificationByID(uuid.UUID) (*Verification, error)
 	GetVerificationByShortID(string) (*Verification, error)
-	GetApplicant(string) (*Applicant, error)
+	GetApplicantByID(uuid.UUID) (*Applicant, error)
 	LinkTelegramProfile(string, string) error
 	UploadDocument(*DocumentUpload) (*Document, error)
 	CancelVerification(string) error
 	ProceedVerification(string) error
-	GetApplicantByExternal(string) (*Applicant, error)
+	GetApplicantByExternalID(string) (*Applicant, error)
 	CreateApplicant(*ApplicantCreate) (string, error)
 	CreateVerification(create *VerificationCreate) (*Verification, error)
 	CreateWebhook(webhook *WebhookCreate) error
+	ListWebhooks() ([]Webhook, error)
+	DeleteWebhook(webhookID uuid.UUID) error
 }
 
 type dataspikeClient struct {
@@ -31,8 +35,8 @@ type dataspikeClient struct {
 	token  string
 }
 
-func (dc *dataspikeClient) GetVerificationByID(verID string) (*Verification, error) {
-	body, err := dc.doRequest(http.MethodGet, fmt.Sprintf("%s/api/v3/verifications/%s", dc.url, verID), nil)
+func (dc *dataspikeClient) GetVerificationByID(verID uuid.UUID) (*Verification, error) {
+	body, err := dc.doRequest(http.MethodGet, fmt.Sprintf("%s/api/v3/verifications/%s", dc.url, verID.String()), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -61,8 +65,8 @@ func (dc *dataspikeClient) GetVerificationByShortID(shortID string) (*Verificati
 	return &verification, nil
 }
 
-func (dc *dataspikeClient) GetApplicant(applicantID string) (*Applicant, error) {
-	body, err := dc.doRequest(http.MethodGet, fmt.Sprintf("%s/api/v3/applicants/%s", dc.url, applicantID), nil)
+func (dc *dataspikeClient) GetApplicantByID(applicantID uuid.UUID) (*Applicant, error) {
+	body, err := dc.doRequest(http.MethodGet, fmt.Sprintf("%s/api/v3/applicants/%s", dc.url, applicantID.String()), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -136,10 +140,8 @@ func (dc *dataspikeClient) UploadDocument(doc *DocumentUpload) (*Document, error
 	if err != nil {
 		return nil, err
 	}
-	req.Header = map[string][]string{
-		tokenHeader:    {dc.token},
-		"Content-Type": {bw.FormDataContentType()},
-	}
+	req.Header.Set(tokenHeader, dc.token)
+	req.Header.Set("Content-Type", bw.FormDataContentType())
 	resp, err := dc.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -174,12 +176,32 @@ func (dc *dataspikeClient) CreateWebhook(webhook *WebhookCreate) error {
 	return err
 }
 
+func (dc *dataspikeClient) ListWebhooks() ([]Webhook, error) {
+	body, err := dc.doRequest(http.MethodGet, fmt.Sprintf("%s/api/v3/organization/webhooks", dc.url), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	var webhooks []Webhook
+	err = json.Unmarshal(body, &webhooks)
+	if err != nil {
+		return nil, err
+	}
+
+	return webhooks, nil
+}
+
+func (dc *dataspikeClient) DeleteWebhook(webhookID uuid.UUID) error {
+	_, err := dc.doRequest(http.MethodDelete, fmt.Sprintf("%s/api/v3/organization/webhooks/%s", dc.url, webhookID.String()), nil)
+	return err
+}
+
 func (dc *dataspikeClient) ProceedVerification(shortID string) error {
 	_, err := dc.doRequest(http.MethodPost, fmt.Sprintf("%s/api/v3/sdk/%s/proceed", dc.url, shortID), nil)
 	return err
 }
 
-func (dc *dataspikeClient) GetApplicantByExternal(externalID string) (*Applicant, error) {
+func (dc *dataspikeClient) GetApplicantByExternalID(externalID string) (*Applicant, error) {
 	body, err := dc.doRequest(http.MethodGet, fmt.Sprintf("%s/api/v3/applicants/by_external_id/%s", dc.url, externalID), nil)
 	if err != nil {
 		return nil, err
@@ -199,7 +221,6 @@ func (dc *dataspikeClient) CreateApplicant(applicant *ApplicantCreate) (string, 
 	if err != nil {
 		return "", err
 	}
-	fmt.Println(string(b))
 
 	body, err := dc.doRequest(http.MethodPost, fmt.Sprintf("%s/api/v3/applicants", dc.url), bytes.NewBuffer(b))
 	if err != nil {
@@ -242,9 +263,7 @@ func (dc *dataspikeClient) doRequest(method, url string, body io.Reader) ([]byte
 	if err != nil {
 		return nil, err
 	}
-	req.Header = map[string][]string{
-		tokenHeader: {dc.token},
-	}
+	req.Header.Set(tokenHeader, dc.token)
 
 	resp, err := dc.client.Do(req)
 	if err != nil {

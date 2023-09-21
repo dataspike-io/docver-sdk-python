@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/dataspike-io/docver-sdk/go/dataspike"
+	"github.com/gofrs/uuid"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
@@ -216,16 +217,20 @@ func Test_dataspikeClient_CreateWebhook(t *testing.T) {
 
 func Test_dataspikeClient_GetApplicant(t *testing.T) {
 	t.Parallel()
+	appID, err := uuid.NewV7()
+	if err != nil {
+		t.Error(err)
+	}
 	tests := []struct {
 		name        string
-		applicantID string
+		applicantID uuid.UUID
 		handler     http.HandlerFunc
 		want        *dataspike.Applicant
 		err         string
 	}{
 		{
 			name:        "success",
-			applicantID: "123",
+			applicantID: appID,
 			handler: http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 				res.WriteHeader(http.StatusOK)
 				res.Write([]byte(`{"applicant_id":"321"}`))
@@ -235,7 +240,7 @@ func Test_dataspikeClient_GetApplicant(t *testing.T) {
 		},
 		{
 			name:        "json error",
-			applicantID: "123",
+			applicantID: appID,
 			handler: http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 				res.WriteHeader(http.StatusOK)
 			}),
@@ -244,7 +249,7 @@ func Test_dataspikeClient_GetApplicant(t *testing.T) {
 		},
 		{
 			name:        "status error",
-			applicantID: "123",
+			applicantID: appID,
 			handler: http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 				res.WriteHeader(http.StatusTeapot)
 			}),
@@ -259,7 +264,7 @@ func Test_dataspikeClient_GetApplicant(t *testing.T) {
 			defer func() { testServer.Close() }()
 
 			dc := dataspike.NewClient(client, testServer.URL, token)
-			got, err := dc.GetApplicant(tt.applicantID)
+			got, err := dc.GetApplicantByID(tt.applicantID)
 			if err != nil {
 				assert.Equal(t, tt.err, err.Error())
 			}
@@ -313,7 +318,7 @@ func Test_dataspikeClient_GetApplicantByExternal(t *testing.T) {
 			defer func() { testServer.Close() }()
 
 			dc := dataspike.NewClient(client, testServer.URL, token)
-			got, err := dc.GetApplicantByExternal(tt.externalID)
+			got, err := dc.GetApplicantByExternalID(tt.externalID)
 			if err != nil {
 				assert.Equal(t, tt.err, err.Error())
 			}
@@ -324,16 +329,20 @@ func Test_dataspikeClient_GetApplicantByExternal(t *testing.T) {
 
 func Test_dataspikeClient_GetVerificationByID(t *testing.T) {
 	t.Parallel()
+	verID, err := uuid.NewV7()
+	if err != nil {
+		t.Error(err)
+	}
 	tests := []struct {
 		name    string
-		verID   string
+		verID   uuid.UUID
 		handler http.HandlerFunc
 		want    *dataspike.Verification
 		err     string
 	}{
 		{
 			name:  "success",
-			verID: "123",
+			verID: verID,
 			handler: http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 				res.WriteHeader(http.StatusOK)
 				res.Write([]byte(`{"id":"321"}`))
@@ -343,7 +352,7 @@ func Test_dataspikeClient_GetVerificationByID(t *testing.T) {
 		},
 		{
 			name:  "json error",
-			verID: "123",
+			verID: verID,
 			handler: http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 				res.WriteHeader(http.StatusOK)
 			}),
@@ -352,7 +361,7 @@ func Test_dataspikeClient_GetVerificationByID(t *testing.T) {
 		},
 		{
 			name:  "status error",
-			verID: "123",
+			verID: verID,
 			handler: http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 				res.WriteHeader(http.StatusTeapot)
 			}),
