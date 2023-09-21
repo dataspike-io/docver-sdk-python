@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/dataspike-io/docver-sdk/go/dataspike"
+	"github.com/gofrs/uuid"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
@@ -17,6 +18,10 @@ var (
 
 func Test_dataspikeClient_CancelVerification(t *testing.T) {
 	t.Parallel()
+	verID, err := uuid.NewV7()
+	if err != nil {
+		t.Error(err)
+	}
 	tests := []struct {
 		name    string
 		handler http.HandlerFunc
@@ -35,7 +40,7 @@ func Test_dataspikeClient_CancelVerification(t *testing.T) {
 			handler: http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 				res.WriteHeader(http.StatusBadRequest)
 			}),
-			err: "dataspike error: 400 Bad Request; body: ",
+			err: "dataspike error: 400 Bad Request; body:",
 		},
 		{
 			name: "unsupported protocol scheme",
@@ -43,7 +48,7 @@ func Test_dataspikeClient_CancelVerification(t *testing.T) {
 				res.WriteHeader(http.StatusBadRequest)
 			}),
 			nonUrl: true,
-			err:    `Get "/api/v3/verifications//cancel": unsupported protocol scheme ""`,
+			err:    `/cancel": unsupported protocol scheme ""`,
 		},
 	}
 	for _, tt := range tests {
@@ -56,11 +61,11 @@ func Test_dataspikeClient_CancelVerification(t *testing.T) {
 			if tt.nonUrl {
 				url = ""
 			}
-			dc := dataspike.NewClient(client, url, token)
-			err := dc.CancelVerification("")
+			dc := dataspike.NewDataspikeClient(client, dataspike.WithEndpoint(url), dataspike.WithToken(token))
+			err = dc.CancelVerification(verID)
 
 			if err != nil {
-				assert.Equal(t, tt.err, err.Error())
+				assert.Contains(t, err.Error(), tt.err)
 			} else if tt.err != "" {
 				t.Errorf("expected %s, but actual nil", tt.err)
 			}
@@ -112,7 +117,7 @@ func Test_dataspikeClient_CreateApplicant(t *testing.T) {
 			testServer := httptest.NewServer(tt.handler)
 			defer func() { testServer.Close() }()
 
-			dc := dataspike.NewClient(client, testServer.URL, token)
+			dc := dataspike.NewDataspikeClient(client, dataspike.WithEndpoint(testServer.URL), dataspike.WithToken(token))
 			got, err := dc.CreateApplicant(tt.applicant)
 			if err != nil {
 				assert.Equal(t, tt.err, err.Error())
@@ -166,7 +171,7 @@ func Test_dataspikeClient_CreateVerification(t *testing.T) {
 			testServer := httptest.NewServer(tt.handler)
 			defer func() { testServer.Close() }()
 
-			dc := dataspike.NewClient(client, testServer.URL, token)
+			dc := dataspike.NewDataspikeClient(client, dataspike.WithEndpoint(testServer.URL), dataspike.WithToken(token))
 			got, err := dc.CreateVerification(tt.verification)
 			if err != nil {
 				assert.Equal(t, tt.err, err.Error())
@@ -207,7 +212,7 @@ func Test_dataspikeClient_CreateWebhook(t *testing.T) {
 			testServer := httptest.NewServer(tt.handler)
 			defer func() { testServer.Close() }()
 
-			dc := dataspike.NewClient(client, testServer.URL, token)
+			dc := dataspike.NewDataspikeClient(client, dataspike.WithEndpoint(testServer.URL), dataspike.WithToken(token))
 			err := dc.CreateWebhook(tt.webhook)
 			assert.Equal(t, tt.err, err)
 		})
@@ -216,16 +221,20 @@ func Test_dataspikeClient_CreateWebhook(t *testing.T) {
 
 func Test_dataspikeClient_GetApplicant(t *testing.T) {
 	t.Parallel()
+	appID, err := uuid.NewV7()
+	if err != nil {
+		t.Error(err)
+	}
 	tests := []struct {
 		name        string
-		applicantID string
+		applicantID uuid.UUID
 		handler     http.HandlerFunc
 		want        *dataspike.Applicant
 		err         string
 	}{
 		{
 			name:        "success",
-			applicantID: "123",
+			applicantID: appID,
 			handler: http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 				res.WriteHeader(http.StatusOK)
 				res.Write([]byte(`{"applicant_id":"321"}`))
@@ -235,7 +244,7 @@ func Test_dataspikeClient_GetApplicant(t *testing.T) {
 		},
 		{
 			name:        "json error",
-			applicantID: "123",
+			applicantID: appID,
 			handler: http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 				res.WriteHeader(http.StatusOK)
 			}),
@@ -244,7 +253,7 @@ func Test_dataspikeClient_GetApplicant(t *testing.T) {
 		},
 		{
 			name:        "status error",
-			applicantID: "123",
+			applicantID: appID,
 			handler: http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 				res.WriteHeader(http.StatusTeapot)
 			}),
@@ -258,8 +267,8 @@ func Test_dataspikeClient_GetApplicant(t *testing.T) {
 			testServer := httptest.NewServer(tt.handler)
 			defer func() { testServer.Close() }()
 
-			dc := dataspike.NewClient(client, testServer.URL, token)
-			got, err := dc.GetApplicant(tt.applicantID)
+			dc := dataspike.NewDataspikeClient(client, dataspike.WithEndpoint(testServer.URL), dataspike.WithToken(token))
+			got, err := dc.GetApplicantByID(tt.applicantID)
 			if err != nil {
 				assert.Equal(t, tt.err, err.Error())
 			}
@@ -312,8 +321,8 @@ func Test_dataspikeClient_GetApplicantByExternal(t *testing.T) {
 			testServer := httptest.NewServer(tt.handler)
 			defer func() { testServer.Close() }()
 
-			dc := dataspike.NewClient(client, testServer.URL, token)
-			got, err := dc.GetApplicantByExternal(tt.externalID)
+			dc := dataspike.NewDataspikeClient(client, dataspike.WithEndpoint(testServer.URL), dataspike.WithToken(token))
+			got, err := dc.GetApplicantByExternalID(tt.externalID)
 			if err != nil {
 				assert.Equal(t, tt.err, err.Error())
 			}
@@ -324,16 +333,20 @@ func Test_dataspikeClient_GetApplicantByExternal(t *testing.T) {
 
 func Test_dataspikeClient_GetVerificationByID(t *testing.T) {
 	t.Parallel()
+	verID, err := uuid.NewV7()
+	if err != nil {
+		t.Error(err)
+	}
 	tests := []struct {
 		name    string
-		verID   string
+		verID   uuid.UUID
 		handler http.HandlerFunc
 		want    *dataspike.Verification
 		err     string
 	}{
 		{
 			name:  "success",
-			verID: "123",
+			verID: verID,
 			handler: http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 				res.WriteHeader(http.StatusOK)
 				res.Write([]byte(`{"id":"321"}`))
@@ -343,7 +356,7 @@ func Test_dataspikeClient_GetVerificationByID(t *testing.T) {
 		},
 		{
 			name:  "json error",
-			verID: "123",
+			verID: verID,
 			handler: http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 				res.WriteHeader(http.StatusOK)
 			}),
@@ -352,7 +365,7 @@ func Test_dataspikeClient_GetVerificationByID(t *testing.T) {
 		},
 		{
 			name:  "status error",
-			verID: "123",
+			verID: verID,
 			handler: http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 				res.WriteHeader(http.StatusTeapot)
 			}),
@@ -366,7 +379,7 @@ func Test_dataspikeClient_GetVerificationByID(t *testing.T) {
 			testServer := httptest.NewServer(tt.handler)
 			defer func() { testServer.Close() }()
 
-			dc := dataspike.NewClient(client, testServer.URL, token)
+			dc := dataspike.NewDataspikeClient(client, dataspike.WithEndpoint(testServer.URL), dataspike.WithToken(token))
 			got, err := dc.GetVerificationByID(tt.verID)
 			if err != nil {
 				assert.Equal(t, tt.err, err.Error())
@@ -420,7 +433,7 @@ func Test_dataspikeClient_GetVerificationByShortID(t *testing.T) {
 			testServer := httptest.NewServer(tt.handler)
 			defer func() { testServer.Close() }()
 
-			dc := dataspike.NewClient(client, testServer.URL, token)
+			dc := dataspike.NewDataspikeClient(client, dataspike.WithEndpoint(testServer.URL), dataspike.WithToken(token))
 			got, err := dc.GetVerificationByShortID(tt.shortID)
 			if err != nil {
 				assert.Equal(t, tt.err, err.Error())
@@ -465,7 +478,7 @@ func Test_dataspikeClient_LinkTelegramProfile(t *testing.T) {
 			testServer := httptest.NewServer(tt.handler)
 			defer func() { testServer.Close() }()
 
-			dc := dataspike.NewClient(client, testServer.URL, token)
+			dc := dataspike.NewDataspikeClient(client, dataspike.WithEndpoint(testServer.URL), dataspike.WithToken(token))
 			err := dc.LinkTelegramProfile(tt.args.applicantID, tt.args.tgProfile)
 			assert.Equal(t, tt.err, err)
 		})
@@ -474,23 +487,24 @@ func Test_dataspikeClient_LinkTelegramProfile(t *testing.T) {
 
 func Test_dataspikeClient_ProceedVerification(t *testing.T) {
 	t.Parallel()
+	verID, err := uuid.NewV7()
+	if err != nil {
+		t.Error(err)
+	}
 	tests := []struct {
 		name    string
-		shortID string
 		handler http.HandlerFunc
 		err     error
 	}{
 		{
-			name:    "success",
-			shortID: "123",
+			name: "success",
 			handler: http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 				res.WriteHeader(http.StatusOK)
 			}),
 			err: nil,
 		},
 		{
-			name:    "status error",
-			shortID: "123",
+			name: "status error",
 			handler: http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 				res.WriteHeader(http.StatusBadRequest)
 			}),
@@ -503,8 +517,8 @@ func Test_dataspikeClient_ProceedVerification(t *testing.T) {
 			testServer := httptest.NewServer(tt.handler)
 			defer func() { testServer.Close() }()
 
-			dc := dataspike.NewClient(client, testServer.URL, token)
-			err := dc.ProceedVerification(tt.shortID)
+			dc := dataspike.NewDataspikeClient(client, dataspike.WithEndpoint(testServer.URL), dataspike.WithToken(token))
+			err := dc.ProceedVerification(verID)
 			assert.Equal(t, tt.err, err)
 		})
 	}
@@ -569,7 +583,7 @@ func Test_dataspikeClient_UploadDocument(t *testing.T) {
 			if tt.nonUrl {
 				url = ""
 			}
-			dc := dataspike.NewClient(client, url, token)
+			dc := dataspike.NewDataspikeClient(client, dataspike.WithEndpoint(url), dataspike.WithToken(token))
 			got, err := dc.UploadDocument(tt.doc)
 			if err != nil {
 				assert.Equal(t, tt.err, err.Error())

@@ -84,11 +84,11 @@ type ApplicantInfo struct {
 	Citizenship string `json:"citizenship"`
 	Address     string `json:"address"`
 	Addresses   struct {
-		Residence Residence `json:"residence"`
+		Residence DetailAddress `json:"residence"`
 	} `json:"addresses"`
 }
 
-type Residence struct {
+type DetailAddress struct {
 	Country    string `json:"country"`
 	City       string `json:"city"`
 	PostalCode string `json:"postal_code"`
@@ -164,6 +164,14 @@ type Document struct {
 }
 
 type WebhookCreate struct {
+	WebhookUrl string   `json:"webhook_url"`
+	EventTypes []string `json:"event_types"`
+	Enabled    bool     `json:"enabled"`
+}
+
+type Webhook struct {
+	WebhookId  string   `json:"webhook_id"`
+	IsSandbox  bool     `json:"is_sandbox"`
 	WebhookUrl string   `json:"webhook_url"`
 	EventTypes []string `json:"event_types"`
 	Enabled    bool     `json:"enabled"`
