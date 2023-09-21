@@ -88,7 +88,7 @@ type ApplicantInfo struct {
 	} `json:"addresses"`
 }
 
-type Residence struct {
+type DetailAddress struct {
 	Country    string `json:"country"`
 	City       string `json:"city"`
 	PostalCode string `json:"postal_code"`
