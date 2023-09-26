@@ -487,10 +487,6 @@ func Test_dataspikeClient_LinkTelegramProfile(t *testing.T) {
 
 func Test_dataspikeClient_ProceedVerification(t *testing.T) {
 	t.Parallel()
-	verID, err := uuid.NewV7()
-	if err != nil {
-		t.Error(err)
-	}
 	tests := []struct {
 		name    string
 		handler http.HandlerFunc
@@ -518,7 +514,7 @@ func Test_dataspikeClient_ProceedVerification(t *testing.T) {
 			defer func() { testServer.Close() }()
 
 			dc := dataspike.NewDataspikeClient(client, dataspike.WithEndpoint(testServer.URL), dataspike.WithToken(token))
-			err := dc.ProceedVerification(verID)
+			err := dc.ProceedVerification("test")
 			assert.Equal(t, tt.err, err)
 		})
 	}
