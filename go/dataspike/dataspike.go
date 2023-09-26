@@ -20,13 +20,13 @@ type IDataspikeClient interface {
 	LinkTelegramProfile(string, string) error
 	UploadDocument(*DocumentUpload) (*Document, error)
 	CancelVerification(uuid.UUID) error
-	ProceedVerification(uuid.UUID) error
+	ProceedVerification(string) error
 	GetApplicantByExternalID(string) (*Applicant, error)
 	CreateApplicant(*ApplicantCreate) (string, error)
-	CreateVerification(create *VerificationCreate) (*Verification, error)
-	CreateWebhook(webhook *WebhookCreate) error
+	CreateVerification(*VerificationCreate) (*Verification, error)
+	CreateWebhook(*WebhookCreate) error
 	ListWebhooks() ([]Webhook, error)
-	DeleteWebhook(webhookID uuid.UUID) error
+	DeleteWebhook(uuid.UUID) error
 }
 
 type Option func(*dataspikeClient)
@@ -218,8 +218,8 @@ func (dc *dataspikeClient) DeleteWebhook(webhookID uuid.UUID) error {
 
 // ProceedVerification proceeds verification by ID. Should be used after all the required documents has been uploaded.
 // Documentation: https://docs.dataspike.io/api/#tag/Verifications/operation/proceed-verification
-func (dc *dataspikeClient) ProceedVerification(shortID uuid.UUID) error {
-	_, err := dc.doRequest(http.MethodPost, fmt.Sprintf("%s/api/v3/sdk/%s/proceed", dc.endpoint, shortID.String()), nil)
+func (dc *dataspikeClient) ProceedVerification(shortID string) error {
+	_, err := dc.doRequest(http.MethodPost, fmt.Sprintf("%s/api/v3/sdk/%s/proceed", dc.endpoint, shortID), nil)
 	return err
 }
 
