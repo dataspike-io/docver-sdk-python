@@ -224,7 +224,7 @@ func (dc *dataspikeClient) ProceedVerification(shortID string) error {
 }
 
 // GetApplicantByExternalID returns a data of applicant by received external ID
-// Documentation: TODO: get link from Sergey
+// Documentation: https://docs.dataspike.io/api/#tag/Applicants/operation/get-applicant-by-external-id
 func (dc *dataspikeClient) GetApplicantByExternalID(externalID string) (*Applicant, error) {
 	body, err := dc.doRequest(http.MethodGet, fmt.Sprintf("%s/api/v3/applicants/by_external_id/%s", dc.endpoint, externalID), nil)
 	if err != nil {
