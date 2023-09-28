@@ -157,11 +157,10 @@ type Document struct {
 	DetectedDocumentType    *string `json:"detected_document_type,omitempty"`
 	DetectedDocumentSide    *string `json:"detected_document_side,omitempty"`
 	DetectedTwoSideDocument *bool   `json:"detected_two_side_document,omitempty"`
-	Errors                  []struct {
-		Code    int    `json:"code"`
-		Message string `json:"message"`
-	} `json:"errors"`
+	Errors                  Errors  `json:"errors"`
 }
+
+// Webhooks
 
 type WebhookCreate struct {
 	WebhookUrl string   `json:"webhook_url"`
