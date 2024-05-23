@@ -7,7 +7,7 @@ authors = [
 ]
 dependencies = [
     "pydantic>=2.7.1",
-    "aiohttp>=3.8.4",
+    "aiohttp>=3.9.5",
     "filetype>=1.2.0",
 ]
 requires-python = ">=3.8"
@@ -47,7 +47,7 @@ dev = [
     "black>=23.1.0",
     "pytest-black>=0.3.12",
     "pyright>=1.1.294",
-    "aioresponses>=0.7.4",
+    "aioresponses>=0.7.6",
     "pytest-aioresponses>=0.2.0",
     "ruff>=0.0.247",
     "polyfactory>=2.16.0",
