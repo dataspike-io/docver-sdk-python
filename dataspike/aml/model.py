@@ -181,7 +181,7 @@ class EntityName:
 @dataclass
 class SourceData:
     name: str
-    source_id: DataSourceStr = Field(union_mode='left_to_right')
+    source_id: DataSourceStr = Field(union_mode="left_to_right")
     reason: Optional[str] = Field(default=None)
     summary: Optional[str] = Field(default=None)
     source_url: Optional[str] = Field(default=None)
