@@ -6,8 +6,8 @@ authors = [
     {name = "Sergey Rublev", email = "sergey.rublev@dataspike.io"},
 ]
 dependencies = [
-    "pydantic>=1.10.5",
-    "aiohttp>=3.8.4",
+    "pydantic>=2.7.1",
+    "aiohttp>=3.9.5",
     "filetype>=1.2.0",
 ]
 requires-python = ">=3.8"
@@ -30,7 +30,7 @@ classifiers = [
 ]
 [project.urls]
 Homepage = "https://dataspike.io"
-Repository = "https://github.com/dataspike-io/docver-sdk"
+Repository = "https://github.com/dataspike-io/docver-sdk-python"
 Documentation = "https://docs.dataspike.io"
 
 [tool.pdm]
@@ -40,6 +40,31 @@ lint = "ruff dataspike tests"
 type-check = "pyright ."
 fmt-with-checks = {shell = "black dataspike tests && ruff dataspike tests && pyright . && pytest ."}
 ci-checks = {shell = "black --check . && ruff dataspike tests && pytest --junitxml=results.xml . && pyright ."}
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest==7.2.1",
+    "black>=23.1.0",
+    "pytest-black>=0.3.12",
+    "pyright>=1.1.294",
+    "aioresponses>=0.7.6",
+    "pytest-aioresponses>=0.2.0",
+    "ruff>=0.0.247",
+    "polyfactory>=2.16.0",
+]
+
+[tool.pdm.version]
+source = "scm"
+write_to = "dataspike/VERSION"
+
+
+[tool.pdm.build]
+excludes = ["./**/.git", './**/.*']
+package-dir = "."
+includes = ["dataspike"]
+source-includes = ["tests", "README.md"]
+editable-backend = "path"
+is-purelib = true
 
 [tool.black]
 line-length = 120
@@ -64,31 +89,7 @@ select = [
 "conftest.py" = ["F403","F405"]
 
 
-[tool.pdm.dev-dependencies]
-dev = [
-    "pytest==7.2.1",
-    "black>=23.1.0",
-    "pytest-black>=0.3.12",
-    "pyright>=1.1.294",
-    "aioresponses>=0.7.4",
-    "pytest-aioresponses>=0.2.0",
-    "ruff>=0.0.247",
-    "pydantic-factories>=1.17.2"
-]
-
 [build-system]
 requires = ["pdm-pep517>=1.0"]
 build-backend = "pdm.pep517.api"
 
-[tool.pdm.version]
-source = "scm"
-write_to = "dataspike/VERSION"
-
-
-[tool.pdm.build]
-excludes = ["./**/.git", './**/.*']
-package-dir = "."
-includes = ["dataspike"]
-source-includes = ["tests", "README.md"]
-editable-backend = "path"
-is-purelib = true
