@@ -15,6 +15,7 @@ __all__ = [
     "CheckResult",
     "Checks",
     "CheckType",
+    "PoiData",
 ]
 
 
@@ -98,6 +99,39 @@ class Checks:
 
 
 @dataclass
+class PoiData:
+    parsed_type: Optional[DocumentType] = Field(default=None)
+    has_mrz: Optional[bool] = Field(default=None)
+    raw_mrz_type: Optional[str] = Field(default=None)
+    country: Optional[str] = Field(default=None)
+    full_name: Optional[str] = Field(default=None)
+    name: Optional[str] = Field(default=None)
+    surname: Optional[str] = Field(default=None)
+    document_number: Optional[str] = Field(default=None)
+    nationality: Optional[str] = Field(default=None)
+    birth_date: Optional[str] = Field(default=None)
+    sex: Optional[str] = Field(default=None)
+    expiry_date: Optional[str] = Field(default=None)
+    issue_date: Optional[str] = Field(default=None)
+    pin: Optional[str] = Field(default=None)
+    card_number: Optional[str] = Field(default=None)
+    license_number: Optional[str] = Field(default=None)
+    license_type: Optional[str] = Field(default=None)
+    license_class: Optional[str] = Field(default=None)
+    cpf_number: Optional[str] = Field(default=None)
+    vin: Optional[str] = Field(default=None)
+    nin: Optional[str] = Field(default=None)
+    occupation: Optional[str] = Field(default=None)
+    polling_unit: Optional[str] = Field(default=None)
+    region: Optional[str] = Field(default=None)
+    restrictions: Optional[str] = Field(default=None)
+    height: Optional[str] = Field(default=None)
+    registration_date: Optional[str] = Field(default=None)
+    parents_names: Optional[str] = Field(default=None)
+    endorsements: Optional[str] = Field(default=None)
+
+
+@dataclass
 class Verification:
     id: UUID
     applicant_id: UUID
@@ -106,6 +140,7 @@ class Verification:
     account_id: str
     account_email: str
     created_at: datetime
+    is_sandbox: bool
     checks: Optional[Checks] = Field(default=None)
     document_type: Optional[DocumentType] = Field(default=None)
     completed_at: Optional[datetime] = Field(default=None)
@@ -114,6 +149,7 @@ class Verification:
     expires_at: Optional[datetime] = Field(default=None)
     verification_url_id: Optional[str] = Field(default=None)
     verification_url: Optional[str] = Field(default=None)
+    poi_data: Optional[PoiData] = Field(default=None)
 
     @property
     def mrz_data(self) -> Optional[dict]:

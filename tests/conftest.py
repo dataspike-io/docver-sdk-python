@@ -9,6 +9,8 @@ from datetime import datetime
 import pytest
 import pytest_asyncio
 
+from dataspike.verifications.model import PoiData
+
 try:
     from dataspike import Api
 except ImportError:
@@ -67,6 +69,7 @@ def verification() -> Verification:
         account_id="api",
         account_email="api@api.api",
         created_at=datetime.now(),
+        is_sandbox=False,
         checks=Checks(
             document_mrz=CheckResult(status=CheckStatus.Verified, data={"mrz": {"name": "John"}}),
             document_ocr=CheckResult(status=CheckStatus.Verified),
@@ -79,5 +82,6 @@ def verification() -> Verification:
             DocumentRef(document_id=uuid4(), document_type=DocumentType.Selfie),
             DocumentRef(document_id=uuid4(), document_type=DocumentType.Poa),
         ],
+        poi_data=PoiData(name="John"),
         document_type=DocumentType.Passport,
     )

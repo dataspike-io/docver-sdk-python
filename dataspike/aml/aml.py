@@ -1,7 +1,7 @@
 from uuid import UUID
 
 from aiohttp.client import _RequestContextManager
-from pydantic import validate_arguments
+from pydantic import validate_call
 
 from .model import AMLSearchRequest, AMLResponse, AMLEntity
 from ..resource import Resource
@@ -16,14 +16,14 @@ class AML(Resource):
     def _get(self, id: UUID) -> _RequestContextManager:
         return self._session.get(url=f"{self._api_endpoint}/api/v3/aml/search/{id}")
 
-    @validate_arguments
+    @validate_call
     async def search(self, request: AMLSearchRequest) -> AMLResponse:
         async with self._search(request) as response:
             await self._validate_resp(response, [200], "aml search")
             data = await response.json()
             return AMLResponse(**data)
 
-    @validate_arguments
+    @validate_call
     async def get(self, id: UUID) -> AMLEntity:
         async with self._get(id) as response:
             await self._validate_resp(response, [200], "aml get")
