@@ -18,11 +18,7 @@ class Verifications(Resource):
         async with self._proceed(verification_id) as response:
             await self._validate_resp(response, [200], "proceed verification")
 
-    def _create(
-        self,
-        applicant_id: Optional[UUID] = None,
-        profile_id: Optional[UUID] = None
-    ) -> _RequestContextManager:
+    def _create(self, applicant_id: Optional[UUID] = None, profile_id: Optional[UUID] = None) -> _RequestContextManager:
         body: dict[str, Any] = {}
         if applicant_id is not None:
             body["applicant_id"] = str(applicant_id)
@@ -32,12 +28,8 @@ class Verifications(Resource):
         return self._session.post(url=f"{self._api_endpoint}/api/v3/verifications", json=body)
 
     @validate_arguments
-    async def create(
-        self,
-        applicant_id: Optional[UUID] = None,
-        profile_id: Optional[UUID] = None
-    ) -> Verification:
-        async with self._create(applicant_id = applicant_id, profile_id=profile_id) as response:
+    async def create(self, applicant_id: Optional[UUID] = None, profile_id: Optional[UUID] = None) -> Verification:
+        async with self._create(applicant_id=applicant_id, profile_id=profile_id) as response:
             await self._validate_resp(response, [201], "create verification")
             data = await response.json()
 

@@ -14,8 +14,6 @@ global_job_config:
       - checkout
 blocks:
   - name: "[Python] tests and checks"
-    run:
-      when: "change_in('/python')"
     task:
       jobs:
       - name: Python library checks
@@ -24,7 +22,6 @@ blocks:
             values: [ "3.8", "3.9", "3.10", "3.11" ]
         commands:
           - sem-version python $PYTHON_VERSION
-          - cd python
           - pip install pdm
           - pdm install --no-self
           - pdm run ci-checks
