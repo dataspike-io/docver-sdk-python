@@ -54,7 +54,7 @@ class EntityTag(StrEnum):
 
     @classmethod
     def _missing_(cls, value):
-        return value
+        return cls.Unknown
 
 
 EntityTagStr = Union[EntityTag, str]
@@ -138,7 +138,7 @@ class DataSource(StrEnum):
 
     @classmethod
     def _missing_(cls, value):
-        return value
+        return None
 
 
 DataSourceStr = Union[DataSource, str]
@@ -180,8 +180,8 @@ class EntityName:
 
 @dataclass
 class SourceData:
-    source_id: DataSourceStr
     name: str
+    source_id: DataSourceStr = Field(union_mode='left_to_right')
     reason: Optional[str] = Field(default=None)
     summary: Optional[str] = Field(default=None)
     source_url: Optional[str] = Field(default=None)
