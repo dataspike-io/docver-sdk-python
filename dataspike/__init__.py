@@ -5,3 +5,5 @@ from .verifications.model import *
 from .documents.model import *
 from .aml.model import *
 from .common import *
+
+from .__version__ import __version__
