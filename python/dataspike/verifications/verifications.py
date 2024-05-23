@@ -1,10 +1,10 @@
-from typing import Any, Optional, Iterable
+from typing import Any, Optional
 from uuid import UUID
 
 from aiohttp.client import _RequestContextManager
 from pydantic import validate_arguments
 
-from .model import Verification, CheckType
+from .model import Verification
 from ..resource import Resource
 from ..common import PagedResponse
 
@@ -20,22 +20,24 @@ class Verifications(Resource):
 
     def _create(
         self,
-        checks: Iterable[CheckType],
         applicant_id: Optional[UUID] = None,
+        profile_id: Optional[UUID] = None
     ) -> _RequestContextManager:
-        body: dict[str, Any] = {"checks_required": checks}
+        body: dict[str, Any] = {}
         if applicant_id is not None:
             body["applicant_id"] = str(applicant_id)
+        if profile_id is not None:
+            body["profile_id"] = str(profile_id)
 
         return self._session.post(url=f"{self._api_endpoint}/api/v3/verifications", json=body)
 
     @validate_arguments
     async def create(
         self,
-        checks: Iterable[CheckType],
         applicant_id: Optional[UUID] = None,
+        profile_id: Optional[UUID] = None
     ) -> Verification:
-        async with self._create(checks, applicant_id) as response:
+        async with self._create(applicant_id = applicant_id, profile_id=profile_id) as response:
             await self._validate_resp(response, [201], "create verification")
             data = await response.json()
 
