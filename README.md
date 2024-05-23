@@ -29,7 +29,7 @@ Library offers well typed async API powered by pydantic and aiohttp.
 from dataspike import *
 
 async with Api("<YOUR_API_TOKEN>") as api:
-    verification = await api.verification.create(checks=[CheckType.Passport, CheckType.Selfie])
+    verification = await api.verification.create()
     await api.document.upload(verification.applicant_id, DocumentType.Passport, open('passport.jpg', 'rb'))
     await api.document.upload(verification.applicant_id, DocumentType.Selfie, open('selfie.jpg', 'rb'))
     await api.verification.proceed(verification.id)
