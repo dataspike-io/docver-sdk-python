@@ -14,6 +14,8 @@ global_job_config:
       - checkout
 blocks:
   - name: "[Python] tests and checks"
+    run:
+      when: "change_in('/', {exclude: ['/examples']})"
     task:
       jobs:
       - name: Python library checks
