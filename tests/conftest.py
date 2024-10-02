@@ -17,20 +17,21 @@ except ImportError:
     from dataspike import Api
 
 from dataspike import *
+from dataspike.verifications.model import PoiData
 
 
 class ResponseJsonEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, UUID):
-            return str(obj)
-        elif isinstance(obj, datetime):
-            return obj.isoformat()
-        elif isinstance(obj, PagedResponse):
-            return {"data": list(obj.data), "has_next": obj.has_next}
-        elif dataclasses.is_dataclass(obj) and not isinstance(obj, type):
-            return dataclasses.asdict(obj)
+    def default(self, o):
+        if isinstance(o, UUID):
+            return str(o)
+        elif isinstance(o, datetime):
+            return o.isoformat()
+        elif isinstance(o, PagedResponse):
+            return {"data": list(o.data), "has_next": o.has_next}
+        elif dataclasses.is_dataclass(o) and not isinstance(o, type):
+            return dataclasses.asdict(o)
         else:
-            return super().default(obj)
+            return super().default(o)
 
 
 def to_json(obj) -> str:
@@ -46,7 +47,7 @@ async def api():
 
 
 @pytest.fixture
-def syncapi():
+def sync():
     with SyncApi("token_sync") as client:
         yield client
 
@@ -67,6 +68,7 @@ def verification() -> Verification:
         account_id="api",
         account_email="api@api.api",
         created_at=datetime.now(),
+        is_sandbox=False,
         checks=Checks(
             document_mrz=CheckResult(status=CheckStatus.Verified, data={"mrz": {"name": "John"}}),
             document_ocr=CheckResult(status=CheckStatus.Verified),
@@ -79,5 +81,6 @@ def verification() -> Verification:
             DocumentRef(document_id=uuid4(), document_type=DocumentType.Selfie),
             DocumentRef(document_id=uuid4(), document_type=DocumentType.Poa),
         ],
+        poi_data=PoiData(name="John"),
         document_type=DocumentType.Passport,
     )

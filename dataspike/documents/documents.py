@@ -3,7 +3,7 @@ from uuid import UUID
 import filetype
 
 from aiohttp import FormData, ClientResponse
-from pydantic import validate_arguments
+from pydantic import validate_call
 
 from .model import DocumentSide, DocumentType, Document
 from ..resource import Resource
@@ -25,9 +25,9 @@ class Documents(Resource):
         data = FormData()
         content_type = None
         try:
-            content_type = filetype.guess(file)
-            if content_type:
-                content_type = content_type.mime
+            ftype = filetype.guess(file)
+            if ftype:
+                content_type = ftype.mime
         except TypeError:
             pass
 
@@ -40,7 +40,7 @@ class Documents(Resource):
             data = await response.json()
             return UUID(data["document_id"])
 
-    @validate_arguments
+    @validate_call
     async def upload(
         self,
         applicant_id: UUID,
@@ -55,7 +55,7 @@ class Documents(Resource):
         """
         return await self._upload(applicant_id, document_type, file, document_side)
 
-    @validate_arguments
+    @validate_call
     async def _sdk_upload(
         self,
         document_type: DocumentType,
@@ -79,13 +79,13 @@ class Documents(Resource):
         content = await response.read()
         return Document(content=content, content_type=content_type, document_type=document_type)
 
-    @validate_arguments
+    @validate_call
     async def download(self, document_id: UUID) -> Document:
         async with self._session.get(url=f"{self._api_endpoint}/api/v3/documents/{document_id}") as response:
             await self._validate_resp(response, [200], "download document")
             return await self.__get_document(response)
 
-    @validate_arguments
+    @validate_call
     async def download_preview(self, document_id: UUID) -> Document:
         async with self._session.get(url=f"{self._api_endpoint}/api/v3/documents/{document_id}/preview") as response:
             await self._validate_resp(response, [200], "download document preview")
