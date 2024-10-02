@@ -25,9 +25,9 @@ class Documents(Resource):
         data = FormData()
         content_type = None
         try:
-            content_type = filetype.guess(file)
-            if content_type:
-                content_type = content_type.mime
+            ftype = filetype.guess(file)
+            if ftype:
+                content_type = ftype.mime
         except TypeError:
             pass
 

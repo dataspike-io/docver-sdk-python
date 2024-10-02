@@ -15,16 +15,16 @@ else:
 
 
 class DataspikeJsonEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, UUID):
-            return str(obj)
-        elif isinstance(obj, datetime):
-            return obj.isoformat()
-        elif isinstance(obj, PagedResponse):
-            return {"data": list(obj.data), "has_next": obj.has_next}
-        elif dataclasses.is_dataclass(obj) and not isinstance(obj, type):
-            return dataclasses.asdict(obj)
-        elif hasattr(obj, "__iter__"):
-            return list(obj)  # type: ignore[attr-defined] # wait when pyright will be smarter
+    def default(self, o):
+        if isinstance(o, UUID):
+            return str(o)
+        elif isinstance(o, datetime):
+            return o.isoformat()
+        elif isinstance(o, PagedResponse):
+            return {"data": list(o.data), "has_next": o.has_next}
+        elif dataclasses.is_dataclass(o) and not isinstance(o, type):
+            return dataclasses.asdict(o)
+        elif hasattr(o, "__iter__"):
+            return list(o)  # type: ignore[attr-defined] # wait when pyright will be smarter
         else:
-            return super().default(obj)
+            return super().default(o)

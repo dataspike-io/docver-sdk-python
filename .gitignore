@@ -8,3 +8,4 @@ __pycache__/
 .venv/
 /.pdm-python
 /results.xml
+.python-version
