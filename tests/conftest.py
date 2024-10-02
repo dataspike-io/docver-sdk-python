@@ -9,8 +9,6 @@ from datetime import datetime
 import pytest
 import pytest_asyncio
 
-from dataspike.verifications.model import PoiData
-
 try:
     from dataspike import Api
 except ImportError:
@@ -19,6 +17,7 @@ except ImportError:
     from dataspike import Api
 
 from dataspike import *
+from dataspike.verifications.model import PoiData
 
 
 class ResponseJsonEncoder(json.JSONEncoder):
