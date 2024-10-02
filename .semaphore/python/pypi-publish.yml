@@ -24,7 +24,6 @@ blocks:
         - name: Publish to PYPI
           commands:
             - sem-version python 3.11
-            - cd python
             - pip install pdm
             - pdm install --no-self
             - pdm build
