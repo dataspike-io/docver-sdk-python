@@ -2,20 +2,20 @@ from uuid import UUID
 from dataspike import Api, AMLEntity, AMLResponse, AMLSearchRequest, SourceData, DataSource
 from conftest import to_json
 
-from pydantic_factories import ModelFactory
+from polyfactory.factories import DataclassFactory
 
 
-class AMLEntityFactory(ModelFactory):
+class AMLEntityFactory(DataclassFactory[AMLEntity]):
     __model__ = AMLEntity
     __allow_none_optionals__ = False
 
 
-class AMLResponseFactory(ModelFactory):
+class AMLResponseFactory(DataclassFactory[AMLResponse]):
     __model__ = AMLResponse
     __allow_none_optionals__ = False
 
 
-class AMLRequestFactory(ModelFactory):
+class AMLRequestFactory(DataclassFactory[AMLSearchRequest]):
     __model__ = AMLSearchRequest
     __allow_none_optionals__ = False
 
@@ -64,4 +64,5 @@ async def test_aml_known_data_source(aioresponses, api: Api):
     aioresponses.assert_called_once()
     assert got == aml
     assert got.fields.sources and len(got.fields.sources) == 1
+    print(type(got.fields.sources[0].source_id))
     assert isinstance(got.fields.sources[0].source_id, DataSource)

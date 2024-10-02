@@ -1,10 +1,10 @@
-from typing import Any, Optional, Iterable
+from typing import Any, Optional
 from uuid import UUID
 
 from aiohttp.client import _RequestContextManager
-from pydantic import validate_arguments
+from pydantic import validate_call
 
-from .model import Verification, CheckType
+from .model import Verification
 from ..resource import Resource
 from ..common import PagedResponse
 
@@ -13,29 +13,23 @@ class Verifications(Resource):
     def _proceed(self, verification_id: UUID) -> _RequestContextManager:
         return self._session.post(url=f"{self._api_endpoint}/api/v3/verifications/{verification_id}/proceed")
 
-    @validate_arguments
+    @validate_call
     async def proceed(self, verification_id: UUID) -> None:
         async with self._proceed(verification_id) as response:
             await self._validate_resp(response, [200], "proceed verification")
 
-    def _create(
-        self,
-        checks: Iterable[CheckType],
-        applicant_id: Optional[UUID] = None,
-    ) -> _RequestContextManager:
-        body: dict[str, Any] = {"checks_required": checks}
+    def _create(self, applicant_id: Optional[UUID] = None, profile_id: Optional[UUID] = None) -> _RequestContextManager:
+        body: dict[str, Any] = {}
         if applicant_id is not None:
             body["applicant_id"] = str(applicant_id)
+        if profile_id is not None:
+            body["profile_id"] = str(profile_id)
 
         return self._session.post(url=f"{self._api_endpoint}/api/v3/verifications", json=body)
 
-    @validate_arguments
-    async def create(
-        self,
-        checks: Iterable[CheckType],
-        applicant_id: Optional[UUID] = None,
-    ) -> Verification:
-        async with self._create(checks, applicant_id) as response:
+    @validate_call
+    async def create(self, applicant_id: Optional[UUID] = None, profile_id: Optional[UUID] = None) -> Verification:
+        async with self._create(applicant_id=applicant_id, profile_id=profile_id) as response:
             await self._validate_resp(response, [201], "create verification")
             data = await response.json()
 
@@ -44,7 +38,7 @@ class Verifications(Resource):
     def _get(self, verification_id: UUID) -> _RequestContextManager:
         return self._session.get(url=f"{self._api_endpoint}/api/v3/verifications/{verification_id}")
 
-    @validate_arguments
+    @validate_call
     async def get(self, verification_id: UUID) -> Optional[Verification]:
         async with self._get(verification_id) as response:
             await self._validate_resp(response, [200, 404], "find verification")
@@ -58,7 +52,7 @@ class Verifications(Resource):
             url=f"{self._api_endpoint}/api/v3/verifications", params={"page": page, "limit": limit}
         )
 
-    @validate_arguments
+    @validate_call
     async def list(self, page: int = 0, limit: int = 10) -> PagedResponse[Verification]:
         async with self._list(page, limit) as response:
             await self._validate_resp(response, [200], "list verifications")
@@ -71,7 +65,7 @@ class Verifications(Resource):
             params={"page": page, "limit": limit},
         )
 
-    @validate_arguments
+    @validate_call
     async def list_for_applicant(
         self, applicant_id: UUID, page: int = 0, limit: int = 10
     ) -> PagedResponse[Verification]:

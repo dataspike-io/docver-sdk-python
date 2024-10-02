@@ -6,8 +6,8 @@ authors = [
     {name = "Sergey Rublev", email = "sergey.rublev@dataspike.io"},
 ]
 dependencies = [
-    "pydantic>=1.10.5",
-    "aiohttp>=3.8.4",
+    "pydantic>=2.7.1",
+    "aiohttp>=3.9.5",
     "filetype>=1.2.0",
 ]
 requires-python = ">=3.8"
@@ -30,39 +30,16 @@ classifiers = [
 ]
 [project.urls]
 Homepage = "https://dataspike.io"
-Repository = "https://github.com/dataspike-io/docver-sdk"
+Repository = "https://github.com/dataspike-io/docver-sdk-python"
 Documentation = "https://docs.dataspike.io"
 
 [tool.pdm]
 [tool.pdm.scripts]
 fmt = "black dataspike tests"
-lint = "ruff dataspike tests"
+lint = "ruff check dataspike tests"
 type-check = "pyright ."
-fmt-with-checks = {shell = "black dataspike tests && ruff dataspike tests && pyright . && pytest ."}
-ci-checks = {shell = "black --check . && ruff dataspike tests && pytest --junitxml=results.xml . && pyright ."}
-
-[tool.black]
-line-length = 120
-target-version = ["py38", "py39", "py310", "py311"]
-
-[tool.ruff]
-line-length = 120
-target-version = "py38" # minimal supported version
-select = [
-  "B",    # flake8-bugbear
-  "C4",   # flake8-comprehensions
-  "E",    # pycodestyle
-  "F",    # pyflakes
-  "PGH",  # pygrep-hooks
-  "RUF",  # ruff
-  "W",    # pycodestyle
-  "W",    # pycodestyle
-  "YTT",  # flake8-2020
-]
-[tool.ruff.per-file-ignores]
-"__init__.py" = ["F401","F403"]
-"conftest.py" = ["F403","F405"]
-
+fmt-with-checks = {shell = "black dataspike tests && ruff check dataspike tests && pyright . && pytest ."}
+ci-checks = {shell = "black --check . && ruff check dataspike tests && pytest --junitxml=results.xml . && pyright ."}
 
 [tool.pdm.dev-dependencies]
 dev = [
@@ -70,15 +47,11 @@ dev = [
     "black>=23.1.0",
     "pytest-black>=0.3.12",
     "pyright>=1.1.294",
-    "aioresponses>=0.7.4",
+    "aioresponses>=0.7.6",
     "pytest-aioresponses>=0.2.0",
     "ruff>=0.0.247",
-    "pydantic-factories>=1.17.2"
+    "polyfactory>=2.16.0",
 ]
-
-[build-system]
-requires = ["pdm-pep517>=1.0"]
-build-backend = "pdm.pep517.api"
 
 [tool.pdm.version]
 source = "scm"
@@ -92,3 +65,34 @@ includes = ["dataspike"]
 source-includes = ["tests", "README.md"]
 editable-backend = "path"
 is-purelib = true
+
+[tool.black]
+line-length = 120
+target-version = ["py38", "py39", "py310", "py311"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py38" # minimal supported version
+lint.select = [
+  "B",    # flake8-bugbear
+  "C4",   # flake8-comprehensions
+  "E",    # pycodestyle
+  "F",    # pyflakes
+  "PGH",  # pygrep-hooks
+  "RUF",  # ruff
+  "W",    # pycodestyle
+  "W",    # pycodestyle
+  "YTT",  # flake8-2020
+]
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401","F403"]
+"conftest.py" = ["F403","F405"]
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+extraPaths = ["tests"]
+
+[build-system]
+requires = ["pdm-pep517>=1.0"]
+build-backend = "pdm.pep517.api"
