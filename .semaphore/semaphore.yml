@@ -21,11 +21,13 @@ blocks:
       - name: Python library checks
         matrix:
           - env_var: PYTHON_VERSION
-            values: [ "3.8", "3.9", "3.10", "3.11" ]
+            values: [ "3.8", "3.9", "3.10", "3.11", "3.12" ]
         commands:
-          - sem-version python $PYTHON_VERSION
+          # - sem-version python 3.11
           - pip install pdm
-          - pdm install --no-self
+          - pdm python install $PYTHON_VERSION
+          - pdm use -q -f $PYTHON_VERSION
+          - pdm install --no-self --lockfile=.locks/py${PYTHON_VERSION//./}-linux.lock
           - pdm run ci-checks
           - test-results publish results.xml
 
