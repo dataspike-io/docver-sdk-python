@@ -23,7 +23,7 @@ blocks:
           - env_var: PYTHON_VERSION
             values: [ "3.8", "3.9", "3.10", "3.11", "3.12" ]
         commands:
-          # - sem-version python 3.11
+          - sem-version python 3.11
           - pip install pdm
           - pdm python install $PYTHON_VERSION
           - pdm use -q -f $PYTHON_VERSION
