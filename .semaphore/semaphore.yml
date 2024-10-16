@@ -25,7 +25,7 @@ blocks:
         commands:
           - sem-version python $PYTHON_VERSION
           - pip install pdm
-          - pdm install --no-self
+          - pdm install --no-self --lockfile=.locks/py${PYTHON_VERSION//./}-linux.lock
           - pdm run ci-checks
           - test-results publish results.xml
 
