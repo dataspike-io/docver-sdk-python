@@ -52,7 +52,6 @@ dev = [
     "pytest-aioresponses>=0.2.0",
     "ruff>=0.0.247",
     "polyfactory>=2.16.0",
-    "ipython>=8.12.3",
 ]
 
 [tool.pdm.version]
