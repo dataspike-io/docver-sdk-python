@@ -29,7 +29,7 @@ blocks:
           - pdm venv create -f -n default --with-pip $PYTHON_VERSION
           - $(pdm venv activate default)
           - pip install pdm
-          - pdm install --no-self --lockfile=.locks/py${PYTHON_VERSION//./}-linux.lock
+          - pdm install --no-self
           - pdm run ci-checks
           - test-results publish results.xml
 
